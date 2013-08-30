@@ -5,7 +5,9 @@
 # Home page
 GET     /                           	controllers.Application.index()
 
-# Accounts
+#####################
+### Accounts	 ####
+#####################
 #GET		/accounts					controllers.Accounts.list(p:Int ?= 0, s ?= "name", o ?= "asc", f ?= "")
 # Add accounts
 #GET     /accounts/new              	controllers.Accounts.create()
@@ -15,15 +17,25 @@ GET     /                           	controllers.Application.index()
 # Remove accounts						
 #GET		/accounts/delete			controllers.Accounts.delete(id:Long)
 
-# Transactions
+
+#####################
+### Transactions ####
+#####################
 GET		/transactions					controllers.Application.list(p:Int ?= 0, s ?= "name", o ?= "asc", f ?= "")
+
 # Add transactions
 GET     /transactions/new              	controllers.Application.create()
 POST    /transactions                  	controllers.Application.save()
+
 # Edit transactions
-GET     /transactions/edit              controllers.Application.edit()
-# Remove transactions					
-GET		/transactions/delete			controllers.Application.delete(id:Long)
+GET     /transactions/:id              controllers.Application.edit(id:Long)
+POST    /transactions/:id              controllers.Application.update(id:Long)
+
+# Delete a transaction
+POST    /computers/:id/delete       	controllers.Application.delete(id:Long)
+
+
+
 
 # Map static resources from the /public folder to the /assets URL path
 # Don't touch this is somehow required..

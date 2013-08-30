@@ -26,39 +26,63 @@ public class Application extends Controller {
      * @param filter Filter applied on transaction VWZ
      */
     public static Result list(int page, String sortBy, String order, String filter) {
+//    	
+//        return ok(
+//                list.render(
+//                    Transaction.page(page, 10, sortBy, order, filter),
+//                    sortBy, order, filter
+//                )
+//            );
     	return TODO;
+    	
     }
     
-    
     /**
-     * GET     /transactions/new              	controllers.Applications.create()
-     * @return
+     * Display the 'edit form' of a existing Computer.
+     *
+     * @param id Id of the computer to edit
      */
-    public static Result create(){
+    public static Result edit(Long id) {
     	return TODO;
     }
     
     
     /**
-     * POST    /transactions                  	controllers.Applications.save()
-     * @return
+     * Handle the 'edit form' submission 
+     *
+     * @param id Id of the computer to edit
+     */
+    public static Result update(Long id) {
+        return TODO;
+    }
+    
+    
+    /**
+     * Display the 'new transaction form'.
+     */
+    public static Result create() {
+//        Form<Computer> computerForm = form(Computer.class);
+//        return ok(
+//            createForm.render(computerForm)
+//        );
+    	return TODO;
+    }
+    
+    /**
+     * Handle the 'new transaction form' submission 
      */
     public static Result save(){
     	return TODO;
     }
     
-    /**
-     * GET     /transactions/edit              controllers.Applications.edit()
-     * @return
-     */
-    public static Result edit(){
-    	return TODO;
-    }
 
     /**
-     * GET		/transactions/delete			controllers.Applications.delete(id:Long)
+     * Handle computer deletion
      */
     public static Result delete(Long id) {
+//        Computer.find.ref(id).delete();
+//        flash("success", "Computer has been deleted");
+//        return GO_HOME;
     	return TODO;
     }
   
