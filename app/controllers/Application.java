@@ -1,10 +1,10 @@
 package controllers;
 
 import models.Transaction;
+import play.data.Form;
 import play.mvc.Controller;
 import play.mvc.Result;
-
-import views.html.*;
+import views.html.list;
 
 public class Application extends Controller {
   
@@ -40,7 +40,7 @@ public class Application extends Controller {
     }
     
     /**
-     * Display the 'edit form' of a existing Computer.
+     * Display the 'edit form' of a existing Transaction.
      *
      * @param id Id of the computer to edit
      */
@@ -52,7 +52,7 @@ public class Application extends Controller {
     /**
      * Handle the 'edit form' submission 
      *
-     * @param id Id of the computer to edit
+     * @param id Id of the transaction to edit
      */
     public static Result update(Long id) {
         return TODO;
@@ -63,11 +63,11 @@ public class Application extends Controller {
      * Display the 'new transaction form'.
      */
     public static Result create() {
-//        Form<Computer> computerForm = form(Computer.class);
-//        return ok(
-//            createForm.render(computerForm)
-//        );
-    	return TODO;
+        Form<Transaction> transactionForm = form(Transaction.class);
+        return ok(
+            createForm.render(transactionForm)
+        );
+//    	return TODO;
     }
     
     /**
