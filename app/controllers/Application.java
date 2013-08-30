@@ -1,7 +1,10 @@
 package controllers;
 
+import models.Transaction;
 import play.mvc.Controller;
 import play.mvc.Result;
+
+import views.html.*;
 
 public class Application extends Controller {
   
@@ -26,14 +29,13 @@ public class Application extends Controller {
      * @param filter Filter applied on transaction VWZ
      */
     public static Result list(int page, String sortBy, String order, String filter) {
-//    	
-//        return ok(
-//                list.render(
-//                    Transaction.page(page, 10, sortBy, order, filter),
-//                    sortBy, order, filter
-//                )
-//            );
-    	return TODO;
+    	
+        return ok(
+                list.render(  //requires import views.html.*;
+                    Transaction.page(page, 10, sortBy, order, filter),
+                    sortBy, order, filter
+                )
+            );
     	
     }
     
