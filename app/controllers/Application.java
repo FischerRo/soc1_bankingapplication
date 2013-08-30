@@ -1,10 +1,11 @@
 package controllers;
 
+import static play.data.Form.form;
 import models.Transaction;
 import play.data.Form;
 import play.mvc.Controller;
 import play.mvc.Result;
-import views.html.list;
+import views.html.*;
 
 public class Application extends Controller {
   
@@ -65,7 +66,7 @@ public class Application extends Controller {
     public static Result create() {
         Form<Transaction> transactionForm = form(Transaction.class);
         return ok(
-            createForm.render(transactionForm)
+        	createForm.render(transactionForm)
         );
 //    	return TODO;
     }
