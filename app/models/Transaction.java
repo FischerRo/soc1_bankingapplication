@@ -1,8 +1,9 @@
 package models;
 
-import java.math.BigInteger;
+import java.math.BigDecimal;
 import java.util.Date;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
@@ -22,25 +23,30 @@ public class Transaction extends Model {
 	@Id
 	public Long id;
 
+	@Constraints.Required
 	@ManyToOne
 	public Account accountFrom;
 	
+	@Constraints.Required
 	@ManyToOne
 	public Account accountTo;
 	
+	@Constraints.MaxLength(80)
 	public String reference;
 
 	@Formats.DateTime(pattern="yyyy-MM-dd")
+	@Constraints.Required
 	public Date date;
 	
 	@Constraints.Required
-	public BigInteger value;	//TODO:Format to 2 Decimals
+	@Column(precision = 15, scale = 2) 
+	public BigDecimal value;	//TODO:Format to 2 Decimals
 
 	@Constraints.Required
 	public String currency; //TODO:turn to Enum
 
 	/**
-	 * Generic query helper for entity Computer with id Long
+	 * Generic query helper for entity Transaction with id Long
 	 */
 	public static Finder<Long,Transaction> find = new Finder<Long,Transaction>(Long.class, Transaction.class); 
 

@@ -47,7 +47,7 @@
 
     <div id="actions">
         
-        <form action="@link(0, "name")" method="GET">
+        <form action="@link(0, "id")" method="GET">
             <input type="search" id="searchbox" name="f" value="@currentFilter" placeholder="Filter by reference...">
             <input type="submit" id="searchsubmit" value="Filter by Reference" class="btn primary">
         </form>
@@ -67,9 +67,9 @@
         <table class="transactions zebra-striped">
             <thead>
                 <tr>
-                    @header("id", "Transaction ID")
-                    @header("account.iban", "From")
-					@header("account.iban", "To")
+                    @header("id", "ID")
+                    @header("accountFrom.iban", "From")
+					@header("accountTo.iban", "To")
                     @header("reference", "Reference")
                     @header("date", "Date")
                     @header("value", "Value")
@@ -84,16 +84,17 @@
                         	<a href="@routes.Application.edit(transaction.id)">@transaction.id</a>
                         </td>
                         <td>
-                            @transaction.accountFrom
+                            @transaction.accountFrom.owner (@transaction.accountFrom.iban)
                         </td>
                         <td>
-                            @transaction.accountTo
+                            @transaction.accountTo.owner (@transaction.accountTo.iban)
                         </td>
                         <td>
                             @transaction.reference
                         </td>
                         <td>
-                            @transaction.date.format("dd MMM yyyy")
+<!--                             @transaction.date.format("dd MMM yyyy") -->
+								@transaction.date.format("yyy-MM-dd")
                         </td>
                         <td>
                             @transaction.value

@@ -16,7 +16,7 @@ create table transaction (
   account_to_id             bigint,
   reference                 varchar(255),
   date                      timestamp,
-  value                     bigint,
+  value                     decimal(15,2),
   currency                  varchar(255),
   constraint pk_transaction primary key (id))
 ;

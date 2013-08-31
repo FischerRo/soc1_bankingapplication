@@ -13,18 +13,19 @@
         <fieldset>
         
             @select(
-                transactionForm("account.name"), 
+                transactionForm("accountFrom.id"), 
                 options(Account.options), 
                 '_label -> "From", '_default -> "-- Choose account --",
-                '_showConstraints -> false
+                '_showConstraints -> true
             )
             
             @select(
-                transactionForm("account.name"), 
+                transactionForm("accountTo.id"), 
                 options(Account.options), 
                 '_label -> "To", '_default -> "-- Choose account --",
-                '_showConstraints -> false
+                '_showConstraints -> true
             )
+            
             
             @inputText(transactionForm("date"), '_label -> "Date")
             @inputText(transactionForm("value"), '_label -> "Value")

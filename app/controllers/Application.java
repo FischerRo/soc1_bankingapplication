@@ -10,10 +10,12 @@ import views.html.*;
 public class Application extends Controller {
   
 	
-    /**
-     * This result directly redirect to application home.
-     */
-    public static Result GO_HOME = redirect(routes.Application.list(0, "name", "asc", ""));
+	/**
+	 * This result directly redirect to application home.
+	 */
+	public static Result GO_HOME = redirect(
+		routes.Application.list(0, "date", "desc", "")
+	);
 
     
     public static Result index() {
@@ -68,14 +70,21 @@ public class Application extends Controller {
         return ok(
         	createForm.render(transactionForm)
         );
-//    	return TODO;
     }
     
     /**
      * Handle the 'new transaction form' submission 
      */
     public static Result save(){
-    	return TODO;
+    	Form<Transaction> transactionForm = form(Transaction.class).bindFromRequest();
+        if(transactionForm.hasErrors()) {
+            return badRequest(createForm.render(transactionForm));
+        }
+        transactionForm.get().save();
+        flash("success", "Transaction from account " + transactionForm.get().accountFrom + " to account " + transactionForm.get().accountTo + " has been created");
+        return GO_HOME;
+
+    	
     }
     
 
