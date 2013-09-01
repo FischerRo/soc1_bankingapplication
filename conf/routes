@@ -21,7 +21,7 @@ GET     /                           	controllers.Application.index()
 #####################
 ### Transactions ####
 #####################
-GET		/transactions					controllers.Application.list(p:Int ?= 0, s ?= "name", o ?= "asc", f ?= "")
+GET		/transactions					controllers.Application.list(p:Int ?= 0, s ?= "date", o ?= "desc", f ?= "")
 
 # Add transactions
 GET     /transactions/new              	controllers.Application.create()
