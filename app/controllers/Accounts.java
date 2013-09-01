@@ -29,7 +29,7 @@ public class Accounts extends Controller {
 	public static Result create(){
 		Form<Account> accountForm = form(Account.class);
 		return ok(
-				createAccountForm.render(accountForm)
+				accountFormCreate.render(accountForm)
 		);
 	}
 	
@@ -40,7 +40,7 @@ public class Accounts extends Controller {
 	public static Result save(){
 		Form<Account> accountForm = form(Account.class).bindFromRequest();
 		if(accountForm.hasErrors()){
-			return badRequest(createAccountForm.render(accountForm));
+			return badRequest(accountFormCreate.render(accountForm));
 		}
 		accountForm.get().save();
 		flash("success", "Account " + accountForm.get().owner + " has been created");

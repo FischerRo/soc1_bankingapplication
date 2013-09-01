@@ -5,9 +5,7 @@ import models.Transaction;
 import play.data.Form;
 import play.mvc.Controller;
 import play.mvc.Result;
-import views.html.createForm;
-import views.html.editForm;
-import views.html.list;
+import views.html.*;
 
 public class Application extends Controller {
   
@@ -36,7 +34,7 @@ public class Application extends Controller {
     public static Result list(int page, String sortBy, String order, String filter) {
     	
         return ok(
-                list.render(  //requires import views.html.*;
+                transactionFormList.render(  //requires import views.html.*;
                     Transaction.page(page, 10, sortBy, order, filter),
                     sortBy, order, filter
                 )
@@ -54,7 +52,7 @@ public class Application extends Controller {
         		Transaction.find.byId(id)
             );
             return ok(
-                editForm.render(id, transactionForm)
+                transactionFormEdit.render(id, transactionForm)
             );
     }
     
@@ -67,7 +65,7 @@ public class Application extends Controller {
     public static Result update(Long id) {
         Form<Transaction> transactionForm = form(Transaction.class).bindFromRequest();
         if(transactionForm.hasErrors()){
-        	return badRequest(editForm.render(id, transactionForm));
+        	return badRequest(transactionFormEdit.render(id, transactionForm));
         }
         transactionForm.get().update(id);
         flash("success", "Transaction " + transactionForm.get().id + " has been updated");
@@ -92,7 +90,7 @@ public class Application extends Controller {
     public static Result create() {
         Form<Transaction> transactionForm = form(Transaction.class);
         return ok(
-        	createForm.render(transactionForm)
+        	transactionFormCreate.render(transactionForm)
         );
     }
     
@@ -102,7 +100,7 @@ public class Application extends Controller {
     public static Result save(){
     	Form<Transaction> transactionForm = form(Transaction.class).bindFromRequest();
         if(transactionForm.hasErrors()) { //TODO: Create custom validation?
-            return badRequest(createForm.render(transactionForm));
+            return badRequest(transactionFormCreate.render(transactionForm));
         }
         transactionForm.get().save();
 //      flash("success", "Transaction from account " + (Account.options()).get(transactionForm.get().accountFrom.id) + " to account " + ((Account) transactionForm.get().accountTo).owner + " has been created");
