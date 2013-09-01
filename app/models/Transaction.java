@@ -7,9 +7,13 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.MapsId;
+import javax.validation.constraints.NotNull;
 
 import play.data.format.Formats;
 import play.data.validation.Constraints;
+import play.data.validation.Constraints.MaxLength;
+import play.data.validation.Constraints.Required;
 import play.db.ebean.Model;
 
 import com.avaje.ebean.Page;
@@ -22,20 +26,23 @@ public class Transaction extends Model {
 
 	@Id
 	public Long id;
-
-	@Column(nullable = false) //TODO: Enable validation
+	
 	@ManyToOne
+	@NotNull
+	@Column(nullable=false)
 	public Account accountFrom;
 	
-	@Column(nullable = false) //TODO: Enable validation
 	@ManyToOne
+	@NotNull
+	@Required
+	@Column(nullable=false)
 	public Account accountTo;
 	
-	@Constraints.MaxLength(80)
+	@MaxLength(80)
 	public String reference;
 
 	@Formats.DateTime(pattern="yyyy-MM-dd")
-	@Constraints.Required
+	@Required
 	public Date date;
 	
 	@Constraints.Required

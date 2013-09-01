@@ -44,6 +44,12 @@
             <strong>Done!</strong> @flash.get("success")
         </div>
     } 
+    
+    @if(flash.containsKey("error")) {
+    	<div class="alert-message danger">
+            <strong>Error!</strong> @flash.get("error")
+        </div>
+    }
 
     <div id="actions">  
         <form action="@link(0, "id")" method="GET">
@@ -51,7 +57,7 @@
             <input type="submit" id="searchsubmit" value="Filter by owner" class="btn primary">
         </form>
         <div id="buttons">
-       		<a class="btn" id="button" href="@routes.Application.list()">Cancel</a>
+       		<a class="btn" id="button" href="@routes.Application.list()">Back</a>
        		<a class="btn success" id="button" href="@routes.Accounts.create()">Add a new account</a>
        	</div>
     </div>

@@ -1,6 +1,9 @@
 package controllers;
 
 import static play.data.Form.form;
+
+import javax.persistence.PersistenceException;
+
 import models.Account;
 import play.data.Form;
 import play.mvc.Controller;
@@ -77,7 +80,7 @@ public class Accounts extends Controller {
 		if(accountForm.hasErrors()){
 			return badRequest(accountFormEdit.render(id, accountForm));
 		}
-		accountForm.get().save();
+		accountForm.get().update(id);
 		flash("success", "Account " + accountForm.get().owner + " has been changed");
 		return Application.GO_ACCOUNTS;
 	}
@@ -88,9 +91,15 @@ public class Accounts extends Controller {
 	 * @return
 	 */
 	public static Result delete(Long id){
-		  Account.find.ref(id).delete();
-	      flash("success", "Account has been deleted");
-	      return Application.GO_ACCOUNTS;
+
+		try{
+			Account.find.ref(id).delete();
+			flash("success", "Account has been deleted");
+		} 
+		catch (PersistenceException pe){
+			flash("error", "Account " + Account.find.ref(id).owner + " cannot be deleted. Found referencing transactions.");
+		}
+		return Application.GO_ACCOUNTS;
 	}
 
 
