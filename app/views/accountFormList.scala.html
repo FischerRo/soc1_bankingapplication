@@ -1,4 +1,4 @@
-@(currentPage: com.avaje.ebean.Page[Transaction], currentSortBy: String, currentOrder: String, currentFilter: String)
+@(currentPage: com.avaje.ebean.Page[Account], currentSortBy: String, currentOrder: String, currentFilter: String)
 
 @****************************************
 * Helper generating navigation links    *
@@ -22,7 +22,7 @@
     }
     
     // Generate the link
-    routes.Application.list(newPage, sortBy, order, currentFilter)
+    routes.Accounts.list(newPage, sortBy, order, currentFilter)
     
 }
 
@@ -37,7 +37,7 @@
 
 @main {
     
-    <h1 id="homeTitle">@Messages("transactions.list.title", currentPage.getTotalRowCount)</h1>
+    <h1 id="homeTitle">@Messages("accounts.list.title", currentPage.getTotalRowCount)</h1>
 
     @if(flash.containsKey("success")) {
         <div class="alert-message warning">
@@ -47,13 +47,13 @@
 
     <div id="actions">  
         <form action="@link(0, "id")" method="GET">
-            <input type="search" id="searchbox" name="f" value="@currentFilter" placeholder="Filter by reference...">
-            <input type="submit" id="searchsubmit" value="Filter by Reference" class="btn primary">
+            <input type="search" id="searchbox" name="f" value="@currentFilter" placeholder="Filter by owner...">
+            <input type="submit" id="searchsubmit" value="Filter by owner" class="btn primary">
         </form>
-        <div id="buttons" >
-       		<a class="btn success" id="accounts" href="@routes.Accounts.list()">Manage Accounts</a>
-       		<a class="btn success" id="create" href="@routes.Application.create()">Add a new transaction</a>
-    	</div>
+        <div id="buttons">
+       		<a class="btn" id="button" href="@routes.Application.list()">Cancel</a>
+       		<a class="btn success" id="button" href="@routes.Accounts.create()">Add a new account</a>
+       	</div>
     </div>
 
     
@@ -69,38 +69,22 @@
             <thead>
                 <tr>
                     @header("id", "ID")
-                    @header("accountFrom.iban", "From")
-					@header("accountTo.iban", "To")
-                    @header("reference", "Reference")
-                    @header("date", "Date")
-                    @header("value", "Value")
-                    @header("currency", "Currency")
+                    @header("owner", "Owner")
+					@header("iban", "IBAN")
                 </tr>
             </thead>
             <tbody>
 
-                @for(transaction <- currentPage.getList) {
+                @for(account <- currentPage.getList) {
                     <tr>
                         <td>
-                        	<a href="@routes.Application.edit(transaction.id)">@transaction.id</a>
+                        	<a href="@routes.Accounts.edit(account.id)">@account.id</a>
                         </td>
                         <td>
-                            @transaction.accountFrom.owner (@transaction.accountFrom.iban)
+                            @account.owner
                         </td>
                         <td>
-                            @transaction.accountTo.owner (@transaction.accountTo.iban)
-                        </td>
-                        <td>
-                            @transaction.reference
-                        </td>
-                        <td>
-								@transaction.date.format("yyyy-MM-dd")
-                        </td>
-                        <td>
-                            @transaction.value
-                        </td>
-                        <td>
-                            @transaction.currency
+                            @account.iban
                         </td>
                     </tr>
                 }

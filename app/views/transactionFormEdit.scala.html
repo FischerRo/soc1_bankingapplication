@@ -36,15 +36,14 @@
         </fieldset>
         
         <div class="actions">
-            <input type="submit" value="Save this transaction" class="btn primary"> , 
-            <a href="@routes.Application.list()" class="btn">Cancel</a> or  
-            <input type="submit" value="Delete this transaction" class="btn danger"> 
+            <input type="submit" value="Save this transaction" class="btn primary"> or 
+            <a href="@routes.Application.list()" class="btn">Cancel</a> 
         </div>
         
     }
    
-    @form(routes.Accounts.create(), 'class -> "topRight") {
-        <input type="submit" value="Add Account" class="btn success">
+    @form(routes.Application.delete(id), 'class -> "topRight") {
+        <input type="submit" value="Delete this transaction" class="btn danger">
     }
     
 }

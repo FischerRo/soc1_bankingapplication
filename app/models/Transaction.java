@@ -51,7 +51,7 @@ public class Transaction extends Model {
 	public static Finder<Long,Transaction> find = new Finder<Long,Transaction>(Long.class, Transaction.class); 
 
 	/**
-	 * Return a page of computer
+	 * Return a page of transactions
 	 *
 	 * @param page Page to display
 	 * @param pageSize Number of computers per page

@@ -16,6 +16,13 @@ public class Application extends Controller {
 	public static Result GO_HOME = redirect(
 		routes.Application.list(0, "date", "desc", "")
 	);
+	
+	/**
+	 * This result directly redirect to application home.
+	 */
+	public static Result GO_ACCOUNTS = redirect(
+		routes.Accounts.list(0, "owner", "asc", "")
+	);
 
     
     public static Result index() {

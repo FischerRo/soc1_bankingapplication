@@ -18,7 +18,13 @@ public class Accounts extends Controller {
 	 * @return
 	 */
 	public static Result list(int page, String sortBy, String order, String filter){
-		return TODO;
+	
+        return ok(
+                accountFormList.render(  //requires import views.html.*;
+                    Account.page(page, 10, sortBy, order, filter),
+                    sortBy, order, filter
+                )
+            );
 	}
 
 	/**
@@ -44,7 +50,7 @@ public class Accounts extends Controller {
 		}
 		accountForm.get().save();
 		flash("success", "Account " + accountForm.get().owner + " has been created");
-		return Application.GO_HOME;
+		return Application.GO_ACCOUNTS;
 	}
 
 //	# Edit accounts
@@ -54,7 +60,11 @@ public class Accounts extends Controller {
 	 * @return
 	 */
 	public static Result edit(Long id){
-		return TODO;
+		Form<Account> accountForm = form(Account.class).fill(
+				Account.find.byId(id));
+		return ok(
+				accountFormEdit.render(id, accountForm)
+		);
 	}
 	
 	/**
@@ -63,17 +73,24 @@ public class Accounts extends Controller {
 	 * @return
 	 */
 	public static Result update(Long id){
-		return TODO;
+		Form<Account> accountForm = form(Account.class).bindFromRequest();
+		if(accountForm.hasErrors()){
+			return badRequest(accountFormEdit.render(id, accountForm));
+		}
+		accountForm.get().save();
+		flash("success", "Account " + accountForm.get().owner + " has been changed");
+		return Application.GO_ACCOUNTS;
 	}
 
-//	# Delete a transaction
 	/**
 	 * POST    /accounts/:id/delete       	controllers.Accounts.delete(id:Long)
 	 * @param id
 	 * @return
 	 */
 	public static Result delete(Long id){
-		return TODO;
+		  Account.find.ref(id).delete();
+	      flash("success", "Account has been deleted");
+	      return Application.GO_ACCOUNTS;
 	}
 
 

@@ -6,6 +6,8 @@ import java.util.Map;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 
+import com.avaje.ebean.Page;
+
 import play.data.validation.Constraints;
 import play.db.ebean.Model;
 
@@ -27,9 +29,27 @@ public class Account extends Model {
      */
     public static Model.Finder<Long,Account> find = new Model.Finder<Long,Account>(Long.class, Account.class);
 
+	/**
+	 * Return a page of accounts
+	 *
+	 * @param page Page to display
+	 * @param pageSize Number of accounts per page
+	 * @param sortBy Account property used for sorting
+	 * @param order Sort order (either or asc or desc)
+	 * @param filter Filter applied on the name column
+	 */
+	public static Page<Account> page(int page, int pageSize, String sortBy, String order, String filter) {
+		return 
+				find.where()
+				.ilike("owner", "%" + filter + "%")
+				.orderBy(sortBy + " " + order)
+				.findPagingList(pageSize)
+				.getPage(page);
+	}
+    
     
     /**
-     * WHAT'S the purpose here?
+     * Usef for dropdown when creating transactions.
      * @return
      */
     public static Map<String,String> options() {

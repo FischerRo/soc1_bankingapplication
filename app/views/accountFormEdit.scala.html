@@ -1,0 +1,31 @@
+@(id: Long, editAccountForm: Form[Account])
+
+@import helper._
+
+@implicitFieldConstructor = @{ FieldConstructor(twitterBootstrapInput.render) } 
+
+@main {
+    
+    <h1>Edit an account</h1>
+    
+    @form(routes.Accounts.update(id)) {
+        
+        <fieldset>
+                    
+            @inputText(editAccountForm("owner"), '_label -> "Owner")
+            @inputText(editAccountForm("iban"), '_label -> "IBAN")
+            
+
+        </fieldset>
+        
+        <div class="actions">
+            <input type="submit" value="Save this account" class="btn primary"> or
+            <a href="@routes.Accounts.list()" class="btn">Cancel</a>  
+        </div>
+
+    }
+    
+    @form(routes.Accounts.delete(id), 'class -> "topRight") {
+        <input type="submit" value="Delete this account" class="btn danger">
+    }
+}
