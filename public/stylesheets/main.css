@@ -56,6 +56,12 @@ table.transactions .header a {
 	top: 0;
 }
 
+#buttons {
+	position: absolute;
+	right: 0;
+	top: 0;
+}
+
 #pagination {
 	position: relative;
 }

@@ -45,16 +45,17 @@
         </div>
     } 
 
-    <div id="actions">
-        
+    <div id="actions">  
         <form action="@link(0, "id")" method="GET">
             <input type="search" id="searchbox" name="f" value="@currentFilter" placeholder="Filter by reference...">
             <input type="submit" id="searchsubmit" value="Filter by Reference" class="btn primary">
         </form>
-        
-        <a class="btn success" id="add" href="@routes.Application.create()">Add a new transaction</a>
-        
+        <div id="buttons" >
+       		<a class="btn success" id="accounts" href="@routes.Accounts.list()">Manage Accounts</a>
+       		<a class="btn success" id="create" href="@routes.Application.create()">Add a new transaction</a>
+    	</div>
     </div>
+
     
     @if(currentPage.getTotalRowCount == 0) {
         
