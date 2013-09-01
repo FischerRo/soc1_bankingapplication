@@ -5,7 +5,9 @@ import models.Transaction;
 import play.data.Form;
 import play.mvc.Controller;
 import play.mvc.Result;
-import views.html.*;
+import views.html.createForm;
+import views.html.editForm;
+import views.html.list;
 
 public class Application extends Controller {
   
@@ -48,7 +50,12 @@ public class Application extends Controller {
      * @param id Id of the computer to edit
      */
     public static Result edit(Long id) {
-    	return TODO;
+        Form<Transaction> computerForm = form(Transaction.class).fill(
+        		Transaction.find.byId(id)
+            );
+            return ok(
+                editForm.render(id, computerForm)
+            );
     }
     
     
@@ -58,8 +65,25 @@ public class Application extends Controller {
      * @param id Id of the transaction to edit
      */
     public static Result update(Long id) {
-        return TODO;
+        Form<Transaction> transactionForm = form(Transaction.class).bindFromRequest();
+        if(transactionForm.hasErrors()){
+        	return badRequest(editForm.render(id, transactionForm));
+        }
+        transactionForm.get().update(id);
+        flash("success", "Transaction " + transactionForm.get().id + " has been updated");
+        return GO_HOME;
     }
+    
+
+    /**
+     * Handle transaction deletion
+     */
+    public static Result delete(Long id) {
+        Transaction.find.ref(id).delete();
+        flash("success", "Transaction has been deleted");
+        return GO_HOME;
+    }
+
     
     
     /**
@@ -77,25 +101,14 @@ public class Application extends Controller {
      */
     public static Result save(){
     	Form<Transaction> transactionForm = form(Transaction.class).bindFromRequest();
-        if(transactionForm.hasErrors()) {
+        if(transactionForm.hasErrors()) { //TODO: Create custom validation?
             return badRequest(createForm.render(transactionForm));
         }
         transactionForm.get().save();
-        flash("success", "Transaction from account " + transactionForm.get().accountFrom + " to account " + transactionForm.get().accountTo + " has been created");
+//      flash("success", "Transaction from account " + (Account.options()).get(transactionForm.get().accountFrom.id) + " to account " + ((Account) transactionForm.get().accountTo).owner + " has been created");
+        flash("success", "Transaction with ID=" + transactionForm.get().id + " has been created");
         return GO_HOME;
-
-    	
     }
     
-
-    /**
-     * Handle computer deletion
-     */
-    public static Result delete(Long id) {
-//        Computer.find.ref(id).delete();
-//        flash("success", "Computer has been deleted");
-//        return GO_HOME;
-    	return TODO;
-    }
   
 }

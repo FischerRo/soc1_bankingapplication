@@ -23,11 +23,11 @@ public class Transaction extends Model {
 	@Id
 	public Long id;
 
-	@Constraints.Required
+	@Column(nullable = false) //TODO: Enable validation
 	@ManyToOne
 	public Account accountFrom;
 	
-	@Constraints.Required
+	@Column(nullable = false) //TODO: Enable validation
 	@ManyToOne
 	public Account accountTo;
 	

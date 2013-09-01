@@ -1,0 +1,49 @@
+@(id: Long, transactionForm: Form[Transaction])
+
+@import helper._
+
+@implicitFieldConstructor = @{ FieldConstructor(twitterBootstrapInput.render) } 
+
+@main {
+    
+    <h1>Edit Transaction</h1>
+    
+    @form(routes.Application.update(id)) {
+        
+        <fieldset>
+        
+            @select(
+                transactionForm("accountFrom.id"), 
+                options(Account.options), 
+                '_label -> "From", '_default -> "-- Choose account --",
+                '_showConstraints -> true
+            )
+            
+            @select(
+                transactionForm("accountTo.id"), 
+                options(Account.options), 
+                '_label -> "To", '_default -> "-- Choose account --",
+                '_showConstraints -> true
+            )
+            
+            
+            @inputText(transactionForm("date"), '_label -> "Date")
+            @inputText(transactionForm("value"), '_label -> "Value")
+            @inputText(transactionForm("currency"), '_label -> "Currency")
+            @inputText(transactionForm("reference"), '_label -> "Reference")
+            
+        
+        </fieldset>
+        
+        <div class="actions">
+            <input type="submit" value="Save this transaction" class="btn primary"> or 
+            <a href="@routes.Application.list()" class="btn">Cancel</a> 
+        </div>
+        
+    }
+    
+    @form(routes.Application.delete(id), 'class -> "topRight") {
+        <input type="submit" value="Delete this transaction" class="btn danger">
+    }
+    
+}
