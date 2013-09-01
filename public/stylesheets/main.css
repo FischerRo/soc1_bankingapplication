@@ -22,6 +22,12 @@ section#main .topRight {
 	top: 70px;
 }
 
+section#main .right {
+	position: relative;
+	right: 20px;
+	top: 70px;
+}
+
 table.transactions em {
 	color: #aaa;
 }

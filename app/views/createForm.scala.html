@@ -37,9 +37,13 @@
         
         <div class="actions">
             <input type="submit" value="Create this transaction" class="btn primary"> or 
-            <a href="@routes.Application.list()" class="btn">Cancel</a> 
+            <a href="@routes.Application.list()" class="btn">Cancel</a>  
         </div>
         
+    }
+   
+    @form(routes.Accounts.create(), 'class -> "topRight") {
+        <input type="submit" value="Add Account" class="btn success">
     }
     
 }

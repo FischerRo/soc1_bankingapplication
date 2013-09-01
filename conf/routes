@@ -8,14 +8,19 @@ GET     /                           	controllers.Application.index()
 #####################
 ### Accounts	 ####
 #####################
-#GET		/accounts					controllers.Accounts.list(p:Int ?= 0, s ?= "name", o ?= "asc", f ?= "")
+GET		/accounts					controllers.Accounts.list(p:Int ?= 0, s ?= "owner", o ?= "asc", f ?= "")
+
 # Add accounts
-#GET     /accounts/new              	controllers.Accounts.create()
-#POST    /accounts                  	controllers.Accounts.save()
+GET     /accounts/new              	controllers.Accounts.create()
+POST    /accounts                  	controllers.Accounts.save()
+
 # Edit accounts
-#GET     /accounts/edit              	controllers.Accounts.edit()
-# Remove accounts						
-#GET		/accounts/delete			controllers.Accounts.delete(id:Long)
+GET     /accounts/:id              	controllers.Accounts.edit(id:Long)
+POST    /accounts/:id              	controllers.Accounts.update(id:Long)
+
+# Delete a transaction
+POST    /accounts/:id/delete       	controllers.Accounts.delete(id:Long)
+
 
 
 #####################

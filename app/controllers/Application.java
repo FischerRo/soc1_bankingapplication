@@ -31,7 +31,7 @@ public class Application extends Controller {
      * @param page Current page number (starts from 0)
      * @param sortBy Column to be sorted
      * @param order Sort order (either asc or desc)
-     * @param filter Filter applied on transaction VWZ
+     * @param filter Filter applied on transaction reference
      */
     public static Result list(int page, String sortBy, String order, String filter) {
     	
@@ -50,11 +50,11 @@ public class Application extends Controller {
      * @param id Id of the computer to edit
      */
     public static Result edit(Long id) {
-        Form<Transaction> computerForm = form(Transaction.class).fill(
+        Form<Transaction> transactionForm = form(Transaction.class).fill(
         		Transaction.find.byId(id)
             );
             return ok(
-                editForm.render(id, computerForm)
+                editForm.render(id, transactionForm)
             );
     }
     
