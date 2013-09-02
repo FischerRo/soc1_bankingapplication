@@ -50,6 +50,37 @@ public class Application extends Controller {
     }
     
     /**
+     * Display the paginated list of transactions according to a fileter.
+     *
+     * @param page Current page number (starts from 0)
+     * @param sortBy Column to be sorted
+     * @param order Sort order (either asc or desc)
+     * @param filterBy Column to be filtered 
+     * @param filter Filter applied on the column
+     */
+    public static Result query(int page, String sortBy, String order, String filterBy, String filter) {
+    	
+        return ok(
+                transactionFormList.render(  //requires import views.html.*;
+                    Transaction.pageByCustomColumn(page, 10, sortBy, order, filterBy, filter),
+                    sortBy, order, filter
+                )
+            );
+    	
+    }
+    
+    public static Result listTransactionsForAccount(String filter) {
+    	
+        return ok(
+                transactionFormList.render(  //requires import views.html.*;
+                    Transaction.pageByCustomColumn(0, 10, "date", "desc", "accountFrom", filter),
+                    "date", "desc", filter
+                )
+            );
+    	
+    }
+    
+    /**
      * Display the 'edit form' of a existing Transaction.
      *
      * @param id Id of the computer to edit

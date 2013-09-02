@@ -7,12 +7,12 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
-import javax.persistence.MapsId;
 import javax.validation.constraints.NotNull;
 
 import play.data.format.Formats;
 import play.data.validation.Constraints;
 import play.data.validation.Constraints.MaxLength;
+import play.data.validation.Constraints.Min;
 import play.data.validation.Constraints.Required;
 import play.db.ebean.Model;
 
@@ -29,7 +29,6 @@ public class Transaction extends Model {
 	
 	@ManyToOne
 	@NotNull
-	@Column(nullable=false)
 	public Account accountFrom;
 	
 	@ManyToOne
@@ -47,6 +46,7 @@ public class Transaction extends Model {
 	
 	@Constraints.Required
 	@Column(precision = 15, scale = 2) 
+	@Min(0)
 	public BigDecimal value;	//TODO:Format to 2 Decimals
 
 	@Constraints.Required
@@ -61,8 +61,8 @@ public class Transaction extends Model {
 	 * Return a page of transactions
 	 *
 	 * @param page Page to display
-	 * @param pageSize Number of computers per page
-	 * @param sortBy Computer property used for sorting
+	 * @param pageSize Number of transactions per page
+	 * @param sortBy Transaction property used for sorting
 	 * @param order Sort order (either or asc or desc)
 	 * @param filter Filter applied on the name column
 	 */
@@ -70,6 +70,25 @@ public class Transaction extends Model {
 		return 
 				find.where()
 				.ilike("reference", "%" + filter + "%")
+				.orderBy(sortBy + " " + order)
+				.fetch("accountTo")	//TODO: is this gonna work? -> just copied..
+				.findPagingList(pageSize)
+				.getPage(page);
+	}
+	
+	/**
+	 * Return a page of transactions
+	 *
+	 * @param page Page to display
+	 * @param pageSize Number of transactions per page
+	 * @param sortBy Transaction property used for sorting
+	 * @param order Sort order (either or asc or desc)
+	 * @param filter Filter applied on the name column
+	 */
+	public static Page<Transaction> pageByCustomColumn(int page, int pageSize, String sortBy, String order, String filterBy, String filter) {
+		return 
+				find.where()
+				.ilike(filterBy, "%" + filter + "%")
 				.orderBy(sortBy + " " + order)
 				.fetch("accountTo")	//TODO: is this gonna work? -> just copied..
 				.findPagingList(pageSize)

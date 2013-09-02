@@ -4,6 +4,10 @@
 
 # Home page
 GET     /                           	controllers.Application.index()
+# Map static resources from the /public folder to the /assets URL path
+# Don't touch this. Required to load css etc.
+GET     /assets/*file               controllers.Assets.at(path="/public", file)
+
 
 #####################
 ### Accounts	 ####
@@ -37,11 +41,13 @@ GET     /transactions/:id              controllers.Application.edit(id:Long)
 POST    /transactions/:id              controllers.Application.update(id:Long)
 
 # Delete a transaction
-POST    /computers/:id/delete       	controllers.Application.delete(id:Long)
+POST    /transactions/:id/delete       	controllers.Application.delete(id:Long)
 
 
 
+#####################
+### API ####
+#####################
+GET     /accounts/:id/transactions				controllers.Application.listTransactionsForAccount(id:String)
 
-# Map static resources from the /public folder to the /assets URL path
-# Don't touch this is somehow required..
-GET     /assets/*file               controllers.Assets.at(path="/public", file)
+
