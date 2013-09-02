@@ -17,7 +17,8 @@ create table transaction (
   reference                 varchar(255),
   date                      timestamp,
   value                     decimal(15,2),
-  currency                  varchar(255),
+  currency                  varchar(3),
+  constraint ck_transaction_currency check (currency in ('USD','EUR','GBP')),
   constraint pk_transaction primary key (id))
 ;
 

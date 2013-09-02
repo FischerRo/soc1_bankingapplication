@@ -1,15 +1,17 @@
 package models;
 
 import java.util.LinkedHashMap;
+import java.util.Locale;
 import java.util.Map;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
 
-import com.avaje.ebean.Page;
-
+import play.data.format.Formatters.SimpleFormatter;
 import play.data.validation.Constraints;
 import play.db.ebean.Model;
+
+import com.avaje.ebean.Page;
 
 @Entity
 public class Account extends Model {
@@ -19,15 +21,15 @@ public class Account extends Model {
 
 	@Constraints.Required
 	public String owner;
-	
+
 	@Constraints.Required
 	public String iban;
-	
-	
-    /**
-     * Generic query helper for entity account with id Long
-     */
-    public static Model.Finder<Long,Account> find = new Model.Finder<Long,Account>(Long.class, Account.class);
+
+
+	/**
+	 * Generic query helper for entity account with id Long
+	 */
+	public static Model.Finder<Long,Account> find = new Model.Finder<Long,Account>(Long.class, Account.class);
 
 	/**
 	 * Return a page of accounts
@@ -46,17 +48,37 @@ public class Account extends Model {
 				.findPagingList(pageSize)
 				.getPage(page);
 	}
-    
-    
-    /**
-     * Usef for dropdown when creating transactions.
-     * @return
-     */
-    public static Map<String,String> options() {
-        LinkedHashMap<String,String> options = new LinkedHashMap<String,String>();
-        for(Account a: Account.find.orderBy("owner").findList()) {
-            options.put(a.id.toString(), a.owner);
-        }
-        return options;
-    }
+
+
+	/**
+	 * Usef for dropdown when creating transactions.
+	 * @return
+	 */
+	public static Map<String,String> options() {
+		LinkedHashMap<String,String> options = new LinkedHashMap<String,String>();
+		for(Account a: Account.find.orderBy("owner").findList()) {
+			options.put(a.id.toString(), a.owner);
+		}
+		return options;
+	}
+
+
+	static {
+		play.data.format.Formatters.register(Account.class, new AccountFormatter());
+	}
+
+	public static class AccountFormatter extends SimpleFormatter<Account> {
+
+		@Override
+		public Account parse(String text, Locale locale) {
+			if (text == null || text.trim().length() == 0)
+				return null;
+			return Account.find.byId(Long.parseLong(text.trim()));
+		}
+
+		@Override
+		public String print(Account value, Locale locale) {
+			return (value == null || value.id == null ? "" : value.id.toString());
+		}
+	}
 }

@@ -1,11 +1,19 @@
 package controllers;
 
 import static play.data.Form.form;
+
+import java.util.List;
+
+import models.Account;
 import models.Transaction;
+import play.Logger;
 import play.data.Form;
+import play.libs.Json;
 import play.mvc.Controller;
 import play.mvc.Result;
-import views.html.*;
+import views.html.transactionFormCreate;
+import views.html.transactionFormEdit;
+import views.html.transactionFormList;
 
 public class Application extends Controller {
   
@@ -70,13 +78,10 @@ public class Application extends Controller {
     }
     
     public static Result listTransactionsForAccount(String filter) {
-    	
-        return ok(
-                transactionFormList.render(  //requires import views.html.*;
-                    Transaction.pageByCustomColumn(0, 10, "date", "desc", "accountFrom", filter),
-                    "date", "desc", filter
-                )
-            );
+    	//TODO: Allow for more than 10 objects -> hasNext()?
+    	List<Transaction> transactionList = Transaction.pageByCustomColumn(0, 10, "date", "desc", "accountFrom", filter).getList();
+    	return ok(Json.toJson(transactionList));
+//    	return ok(XML.toString(transactionList));
     	
     }
     
@@ -137,8 +142,11 @@ public class Application extends Controller {
      */
     public static Result save(){
     	Form<Transaction> transactionForm = form(Transaction.class).bindFromRequest();
-        if(transactionForm.hasErrors()) { //TODO: Create custom validation?
-            return badRequest(transactionFormCreate.render(transactionForm));
+//        if(transactionForm.hasErrors() || "".equals(form().bindFromRequest().get("accountFrom.id"))) { //TODO: Create custom validation?
+    	Logger.info(transactionForm.errorsAsJson().toString());
+    	if(transactionForm.hasErrors()) { //TODO: Create custom validation?
+    		Logger.info("###### ERRORS ****");
+        	return badRequest(transactionFormCreate.render(transactionForm));
         }
         transactionForm.get().save();
 //      flash("success", "Transaction from account " + (Account.options()).get(transactionForm.get().accountFrom.id) + " to account " + ((Account) transactionForm.get().accountTo).owner + " has been created");

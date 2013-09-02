@@ -13,14 +13,15 @@
         <fieldset>
         
             @select(
-                transactionForm("accountFrom.id"), 
+                transactionForm("accountFrom"), 
                 options(Account.options), 
                 '_label -> "From", '_default -> "-- Choose account --",
                 '_showConstraints -> true
             )
             
+            
             @select(
-                transactionForm("accountTo.id"), 
+                transactionForm("accountTo"), 
                 options(Account.options), 
                 '_label -> "To", '_default -> "-- Choose account --",
                 '_showConstraints -> true
@@ -29,7 +30,14 @@
             
             @inputText(transactionForm("date"), '_label -> "Date")
             @inputText(transactionForm("value"), '_label -> "Value")
-            @inputText(transactionForm("currency"), '_label -> "Currency")
+            
+			@select(field = transactionForm("currency"), 
+				options(Transaction.Currency.values().toList.map(_.toString)),
+				'_label -> "Currency",
+				'_default -> "-- Choose Currency --", 
+				'_showConstraints -> true
+				)
+           
             @inputText(transactionForm("reference"), '_label -> "Reference")
             
 
@@ -42,4 +50,21 @@
         
     }
     
+    
+    <script type="text/javascript">
+		$('#accountFrom, #accountTo').change(function () {
+			if($('#accountFrom').val() === $('#accountTo').val() && $('#accountFrom').val() !== '' ) {
+				$('#accountFrom, #accountTo').parent().find('.help-inline').html('<span>Account to and from cannot be identical!</span>');
+				$('#accountFrom, #accountTo').parent().parent().addClass('error');
+			} else {
+				$('#accountFrom, #accountTo').parent().find('.help-inline').html('<span>Required</span>');
+				$('#accountFrom, #accountTo').parent().parent().removeClass('error');	
+			}
+
+		});
+
+		$('input:submit').click(function () {
+			if($('#accountFrom').val() === $('#accountTo').val() && $('#accountFrom').val() !== '') {return false;}
+		});
+    </script>
 }

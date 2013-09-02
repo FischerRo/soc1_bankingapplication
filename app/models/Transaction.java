@@ -5,7 +5,10 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
 
@@ -28,20 +31,20 @@ public class Transaction extends Model {
 	public Long id;
 	
 	@ManyToOne
-	@NotNull
+	@Required
+	@Formats.NonEmpty
 	public Account accountFrom;
 	
 	@ManyToOne
-	@NotNull
 	@Required
-	@Column(nullable=false)
+	@Formats.NonEmpty
 	public Account accountTo;
 	
 	@MaxLength(80)
 	public String reference;
 
 	@Formats.DateTime(pattern="yyyy-MM-dd")
-	@Required
+	@Constraints.Required
 	public Date date;
 	
 	@Constraints.Required
@@ -49,8 +52,17 @@ public class Transaction extends Model {
 	@Min(0)
 	public BigDecimal value;	//TODO:Format to 2 Decimals
 
+//	@Constraints.Required
+//	public String currency;
+
 	@Constraints.Required
-	public String currency; //TODO:turn to Enum
+	@Enumerated(EnumType.STRING)
+	public Currency currency;
+	
+	
+	public enum Currency {  
+        USD, EUR, GBP  
+    }  
 
 	/**
 	 * Generic query helper for entity Transaction with id Long
