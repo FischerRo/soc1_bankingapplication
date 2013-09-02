@@ -4,11 +4,12 @@ import static play.data.Form.form;
 
 import java.util.List;
 
-import models.Account;
 import models.Transaction;
 import play.Logger;
 import play.data.Form;
 import play.libs.Json;
+import play.mvc.BodyParser;
+import play.mvc.BodyParser.Xml;
 import play.mvc.Controller;
 import play.mvc.Result;
 import views.html.transactionFormCreate;
@@ -77,13 +78,13 @@ public class Application extends Controller {
     	
     }
     
+    @BodyParser.Of(Xml.class)
     public static Result listTransactionsForAccount(String filter) {
     	//TODO: Allow for more than 10 objects -> hasNext()?
     	List<Transaction> transactionList = Transaction.pageByCustomColumn(0, 10, "date", "desc", "accountFrom", filter).getList();
     	return ok(Json.toJson(transactionList));
-//    	return ok(XML.toString(transactionList));
-    	
     }
+    
     
     /**
      * Display the 'edit form' of a existing Transaction.
