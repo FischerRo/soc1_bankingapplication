@@ -5,11 +5,8 @@ import static play.data.Form.form;
 import java.util.List;
 
 import models.Transaction;
-import play.Logger;
 import play.data.Form;
 import play.libs.Json;
-import play.mvc.BodyParser;
-import play.mvc.BodyParser.Xml;
 import play.mvc.Controller;
 import play.mvc.Result;
 import views.html.transactionFormCreate;
@@ -78,10 +75,21 @@ public class Application extends Controller {
     	
     }
     
-    @BodyParser.Of(Xml.class)
     public static Result listTransactionsForAccount(String filter) {
     	//TODO: Allow for more than 10 objects -> hasNext()?
     	List<Transaction> transactionList = Transaction.pageByCustomColumn(0, 10, "date", "desc", "accountFrom", filter).getList();
+    	return ok(Json.toJson(transactionList));
+    }
+    
+    public static Result listCreditForAccount(String filter) {
+    	//TODO: Allow for more than 10 objects -> hasNext()?
+    	List<Transaction> transactionList = Transaction.pageByCustomColumn(0, 1000, "date", "desc", "accountTo", filter).getList();
+    	return ok(Json.toJson(transactionList));
+    }
+    
+    public static Result listDebitForAccount(String filter) {
+    	//TODO: Allow for more than 10 objects -> hasNext()?
+    	List<Transaction> transactionList = Transaction.pageByCustomColumn(0, 1000, "date", "desc", "accountFrom", filter).getList();
     	return ok(Json.toJson(transactionList));
     }
     
@@ -143,14 +151,10 @@ public class Application extends Controller {
      */
     public static Result save(){
     	Form<Transaction> transactionForm = form(Transaction.class).bindFromRequest();
-//        if(transactionForm.hasErrors() || "".equals(form().bindFromRequest().get("accountFrom.id"))) { //TODO: Create custom validation?
-    	Logger.info(transactionForm.errorsAsJson().toString());
     	if(transactionForm.hasErrors()) { //TODO: Create custom validation?
-    		Logger.info("###### ERRORS ****");
         	return badRequest(transactionFormCreate.render(transactionForm));
         }
         transactionForm.get().save();
-//      flash("success", "Transaction from account " + (Account.options()).get(transactionForm.get().accountFrom.id) + " to account " + ((Account) transactionForm.get().accountTo).owner + " has been created");
         flash("success", "Transaction with ID=" + transactionForm.get().id + " has been created");
         return GO_HOME;
     }

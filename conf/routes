@@ -49,5 +49,7 @@ POST    /transactions/:id/delete       	controllers.Application.delete(id:Long)
 ### API ####
 #####################
 GET     /accounts/:id/transactions				controllers.Application.listTransactionsForAccount(id:String)
+GET     /accounts/:id/debit						controllers.Application.listDebitForAccount(id:String)
+GET     /accounts/:id/credit					controllers.Application.listCreditForAccount(id:String)
 
 
