@@ -1,6 +1,7 @@
 .cache
 .target/
 *.DS_Store
+/Backup
 logs
 project/project
 project/target
