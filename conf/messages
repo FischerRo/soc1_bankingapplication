@@ -1,7 +1,7 @@
 # Messages
 
 accounts.list.title={0,choice,0#No accounts|1#One account|1<{0,number,integer} accounts} found
-
+customer.list.title={0,choice,0#No customers|1#One customer|1<{0,number,integer} customers} found
 transactions.list.title={0,choice,0#No transactions|1#One transaction|1<{0,number,integer} transactions} found
 
 

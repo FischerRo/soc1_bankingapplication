@@ -1,0 +1,44 @@
+@(id: Long, editCustomerForm: Form[Customer])
+
+@import helper._
+
+    @implicitFieldConstructor = @{
+        FieldConstructor(twitterBootstrapInput.render)
+    }
+
+@main {
+
+    <h1>Edit a customer</h1>
+
+    @form(routes.Accounts.update(id)) {
+
+        <fieldset>
+
+            @inputText(editCustomerForm("lastName"), '_label -> "Last Name")
+            @inputText(editCustomerForm("firstName"), '_label -> "First Name")
+
+            @select(field = editCustomerForm("sex"),
+                options(Customer.Sex.values().toList.map(_.toString)),
+                '_label -> "Sex",
+                '_default -> "Choose sex",
+                '_showConstraints -> true
+            )
+
+            @inputText(editCustomerForm("city"), '_label -> "City")
+            @inputText(editCustomerForm("age"), '_label -> "Age")
+            @inputText(editCustomerForm("ageGroup"), '_label -> "Age Group")
+
+
+        </fieldset>
+
+        <div class="actions">
+            <input type="submit" value="Save this account" class="btn primary"> or
+            <a href="@routes.Customers.list()" class="btn">Cancel</a>
+        </div>
+
+    }
+
+    @form(routes.Customers.delete(id), 'class -> "topRight") {
+        <input type="submit" value="Delete this customer" class="btn danger">
+    }
+}

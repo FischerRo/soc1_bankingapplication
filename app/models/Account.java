@@ -61,7 +61,7 @@ public class Account extends Model {
 
 
     /**
-     * Usef for dropdown when creating transactions.
+     * Used for dropdown when creating transactions.
      *
      * @return
      */

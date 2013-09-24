@@ -12,6 +12,18 @@ create table account (
   constraint pk_account primary key (id))
 ;
 
+create table customer (
+  id                        bigint not null,
+  last_name                 varchar(255),
+  first_name                varchar(255),
+  sex                       varchar(6),
+  city                      varchar(255),
+  age                       integer,
+  age_group                 varchar(255),
+  constraint ck_customer_sex check (sex in ('male','female')),
+  constraint pk_customer primary key (id))
+;
+
 create table transaction (
   id                        bigint not null,
   account_from_id           bigint,
@@ -29,6 +41,8 @@ create table transaction (
 
 create sequence account_seq;
 
+create sequence customer_seq;
+
 create sequence transaction_seq;
 
 alter table transaction add constraint fk_transaction_accountFrom_1 foreign key (account_from_id) references account (id) on delete restrict on update restrict;
@@ -44,11 +58,15 @@ SET REFERENTIAL_INTEGRITY FALSE;
 
 drop table if exists account;
 
+drop table if exists customer;
+
 drop table if exists transaction;
 
 SET REFERENTIAL_INTEGRITY TRUE;
 
 drop sequence if exists account_seq;
+
+drop sequence if exists customer_seq;
 
 drop sequence if exists transaction_seq;
 

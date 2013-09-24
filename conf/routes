@@ -26,6 +26,22 @@ POST        /accounts/:id                     controllers.Accounts.update(id:Lon
 POST        /accounts/:id/delete              controllers.Accounts.delete(id:Long)
 
 
+#####################
+### Customers    ####
+#####################
+GET         /customers                        controllers.Customers.list(p:Int ?=0, s ?= "lastName", o ?= "asc", f ?= "")
+
+# Add accounts
+GET         /customers/new                    controllers.Customers.create()
+POST        /customers                        controllers.Customers.save()
+
+# Edit accounts
+GET         /customers/:id                    controllers.Customers.edit(id:Long)
+POST        /customers/:id                    controllers.Customers.update(id:Long)
+
+# Delete a transaction
+POST        /customers/:id/delete             controllers.Customers.delete(id:Long)
+
 
 #####################
 ### Transactions ####

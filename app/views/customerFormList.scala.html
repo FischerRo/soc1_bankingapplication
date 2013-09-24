@@ -1,4 +1,4 @@
-@(currentPage: com.avaje.ebean.Page[Account], currentSortBy: String, currentOrder: String, currentFilter: String)
+@(currentPage: com.avaje.ebean.Page[Customer], currentSortBy: String, currentOrder: String, currentFilter: String)
 @****************************************
 * Helper generating navigation links *
 ****************************************@
@@ -21,7 +21,7 @@
         }
 
         // Generate the link
-        routes.Accounts.list(newPage, sortBy, order, currentFilter)
+        routes.Customers.list(newPage, sortBy, order, currentFilter)
 
     }
 
@@ -38,7 +38,7 @@
 
 @main {
 
-    <h1 id="homeTitle">@Messages("accounts.list.title", currentPage.getTotalRowCount)</h1>
+    <h1 id="homeTitle">@Messages("customer.list.title", currentPage.getTotalRowCount)</h1>
 
     @if(flash.containsKey("success")) {
         <div class="alert-message warning">
@@ -54,12 +54,12 @@
 
     <div id="actions">
         <form action="@link(0, "id")" method="GET">
-            <input type="search" id="searchbox" name="f" value="@currentFilter" placeholder="Filter by owner...">
-            <input type="submit" id="searchsubmit" value="Filter by owner" class="btn primary">
+            <input type="search" id="searchbox" name="f" value="@currentFilter" placeholder="Filter by lastname...">
+            <input type="submit" id="searchsubmit" value="Filter by lastname" class="btn primary">
         </form>
         <div id="buttons">
             <a class="btn" id="button" href="@routes.Application.list()">Back</a>
-            <a class="btn success" id="button" href="@routes.Accounts.create()">Add a new account</a>
+            <a class="btn success" id="button" href="@routes.Customers.create()">Add a new customer</a>
         </div>
     </div>
 
@@ -76,26 +76,38 @@
             <thead>
                 <tr>
                     @header("id", "ID")
-                    @header("owner", "Owner")
-                    @header("iban", "IBAN")
-                    @header("type", "Type")
+                    @header("lastName", "Last Name")
+                    @header("firstName", "First Name")
+                    @header("sex", "Sex")
+                    @header("city", "City")
+                    @header("age", "Age")
+                    @header("ageGroup", "Age Group")
                 </tr>
             </thead>
             <tbody>
 
-            @for(account <- currentPage.getList) {
+            @for(customer <- currentPage.getList) {
                 <tr>
                     <td>
-                        <a href="@routes.Accounts.edit(account.id)">@account.id</a>
+                        <a href="@routes.Customers.edit(customer.id)">@customer.id</a>
                     </td>
                     <td>
-                        @account.owner
+                        @customer.lastName
                     </td>
                     <td>
-                        @account.iban
+                        @customer.firstName
                     </td>
                     <td>
-                        @account.typeOf
+                        @customer.sex
+                    </td>
+                    <td>
+                        @customer.city
+                    </td>
+                    <td>
+                        @customer.age
+                    </td>
+                    <td>
+                        @customer.ageGroup
                     </td>
                 </tr>
             }
