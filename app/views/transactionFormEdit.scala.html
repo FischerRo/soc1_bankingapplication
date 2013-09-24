@@ -1,74 +1,75 @@
 @(id: Long, transactionForm: Form[Transaction])
 
-@import helper._
+    @import helper._
 
-@implicitFieldConstructor = @{ FieldConstructor(twitterBootstrapInput.render) } 
-
-@main {
-    
-    <h1>Edit Transaction</h1>
-    
-    @form(routes.Application.update(id)) {
-        
-        <fieldset>
-        
-            @select(
-                transactionForm("accountFrom"), 
-                options(Account.options), 
-                '_label -> "From", '_default -> "-- Choose account --",
-                '_showConstraints -> true
-            )
-            
-            @select(
-                transactionForm("accountTo"), 
-                options(Account.options), 
-                '_label -> "To", '_default -> "-- Choose account --",
-                '_showConstraints -> true
-            )
-            
-            
-            @inputText(transactionForm("date"), '_label -> "Date")
-            @inputText(transactionForm("value"), '_label -> "Value")
-            
-			@select(field = transactionForm("currency"), 
-				options(Transaction.Currency.values().toList.map(_.toString)),
-				'_label -> "Currency",
-				'_default -> "-- Choose Currency --", 
-				'_showConstraints -> true
-				)
-
-            @inputText(transactionForm("reference"), '_label -> "Reference")
-            
-        
-        </fieldset>
-        
-        <div class="actions">
-            <input type="submit" value="Save this transaction" class="btn primary"> or 
-            <a href="@routes.Application.list()" class="btn">Cancel</a> 
-        </div>
-        
+    @implicitFieldConstructor = @{
+        FieldConstructor(twitterBootstrapInput.render)
     }
-   
-    @form(routes.Application.delete(id), 'class -> "topRight") {
-        <input type="submit" value="Delete this transaction" class="btn danger">
+
+    @main {
+
+        <h1>Edit Transaction</h1>
+
+        @form(routes.Application.update(id)) {
+
+            <fieldset>
+
+                @select(
+                    transactionForm("accountFrom"),
+                    options(Account.options),
+                    '_label -> "From", '_default -> "-- Choose account --",
+                    '_showConstraints -> true
+                )
+
+                @select(
+                    transactionForm("accountTo"),
+                    options(Account.options),
+                    '_label -> "To", '_default -> "-- Choose account --",
+                    '_showConstraints -> true
+                )
+
+                @inputText(transactionForm("date"), '_label -> "Date")
+                @inputText(transactionForm("value"), '_label -> "Value")
+
+                @select(field = transactionForm("currency"),
+                    options(Transaction.Currency.values().toList.map(_.toString)),
+                    '_label -> "Currency",
+                    '_default -> "-- Choose Currency --",
+                    '_showConstraints -> true
+                )
+
+                @inputText(transactionForm("purpose"), '_label -> "Reference")
+
+
+            </fieldset>
+
+            <div class="actions">
+                <input type="submit" value="Save this transaction" class="btn primary"> or
+                <a href="@routes.Application.list()" class="btn">Cancel</a>
+            </div>
+
+        }
+
+        @form(routes.Application.delete(id), 'class -> "topRight") {
+            <input type="submit" value="Delete this transaction" class="btn danger">
+        }
+
+
+        <script type="text/javascript">
+        $ ( '#accountFrom, #accountTo' ).change ( function ( ) {
+        if ( $ ( '#accountFrom' ).val ( ) === $ ( '#accountTo' ).val ( ) && $ ( '#accountFrom' ).val ( ) !== '' ) {
+        $ ( '#accountFrom, #accountTo' ).parent ( ).find ( '.help-inline' ).html ( '<span>Account to and from cannot be identical!</span>' ) ;
+        $ ( '#accountFrom, #accountTo' ).parent ( ).parent ( ).addClass ( 'error' ) ;
+        } else {
+        $ ( '#accountFrom, #accountTo' ).parent ( ).find ( '.help-inline' ).html ( '<span>Required</span>' ) ;
+        $ ( '#accountFrom, #accountTo' ).parent ( ).parent ( ).removeClass ( 'error' ) ;
+        }
+
+        } ) ;
+
+        $ ( 'input:submit' ).click ( function ( ) {
+        if ( $ ( '#accountFrom' ).val ( ) === $ ( '#accountTo' ).val ( ) && $ ( '#accountFrom' ).val ( ) !== '' ) { return false ; }
+        } ) ;
+        </script>
+
     }
-    
-    
-      <script type="text/javascript">
-		$('#accountFrom, #accountTo').change(function () {
-			if($('#accountFrom').val() === $('#accountTo').val() && $('#accountFrom').val() !== '' ) {
-				$('#accountFrom, #accountTo').parent().find('.help-inline').html('<span>Account to and from cannot be identical!</span>');
-				$('#accountFrom, #accountTo').parent().parent().addClass('error');
-			} else {
-				$('#accountFrom, #accountTo').parent().find('.help-inline').html('<span>Required</span>');
-				$('#accountFrom, #accountTo').parent().parent().removeClass('error');	
-			}
-
-		});
-
-		$('input:submit').click(function () {
-			if($('#accountFrom').val() === $('#accountTo').val() && $('#accountFrom').val() !== '') {return false;}
-		});
-    </script>
-    
-}

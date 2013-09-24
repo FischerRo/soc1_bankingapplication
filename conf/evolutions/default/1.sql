@@ -14,7 +14,7 @@ create table transaction (
   id                        bigint not null,
   account_from_id           bigint,
   account_to_id             bigint,
-  reference                 varchar(255),
+  purpose                   varchar(255),
   date                      timestamp,
   value                     decimal(15,2),
   currency                  varchar(3),

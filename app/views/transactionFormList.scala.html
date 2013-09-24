@@ -1,141 +1,142 @@
 @(currentPage: com.avaje.ebean.Page[Transaction], currentSortBy: String, currentOrder: String, currentFilter: String)
+    @****************************************
+    * Helper generating navigation links *
+    ****************************************@
+    @link(newPage: Int, newSortBy: String) = @{
 
-@****************************************
-* Helper generating navigation links    *
-****************************************@
-@link(newPage:Int, newSortBy:String) = @{
-    
-    var sortBy = currentSortBy
-    var order = currentOrder
-    
-    if(newSortBy != null) {
-        sortBy = newSortBy
-        if(currentSortBy == newSortBy) {
-            if(currentOrder == "asc") {
-                order = "desc"
+        var sortBy = currentSortBy
+        var order = currentOrder
+
+        if(newSortBy != null) {
+            sortBy = newSortBy
+            if(currentSortBy == newSortBy) {
+                if(currentOrder == "asc") {
+                    order = "desc"
+                } else {
+                    order = "asc"
+                }
             } else {
                 order = "asc"
             }
-        } else {
-            order = "asc"
         }
-    }
-    
-    // Generate the link
-    routes.Application.list(newPage, sortBy, order, currentFilter)
-    
-}
 
-@**********************************
-* Helper generating table headers *
-***********************************@
-@header(key:String, title:String) = {
-    <th class="@key.replace(".","_") header @if(currentSortBy == key) @{if(currentOrder == "asc") "headerSortDown" else "headerSortUp"}">
-        <a href="@link(0, key)">@title</a>
-    </th>
-}
+        // Generate the link
+        routes.Application.list(newPage, sortBy, order, currentFilter)
 
-@main {
-    
-    <h1 id="homeTitle">@Messages("transactions.list.title", currentPage.getTotalRowCount)</h1>
-
-    @if(flash.containsKey("success")) {
-        <div class="alert-message warning">
-            <strong>Done!</strong> @flash.get("success")
-        </div>
     }
 
-    <div id="actions">  
-        <form action="@link(0, "id")" method="GET">
-            <input type="search" id="searchbox" name="f" value="@currentFilter" placeholder="Filter by reference...">
-            <input type="submit" id="searchsubmit" value="Filter by Reference" class="btn primary">
-        </form>
-        <div id="buttons" >
-       		<a class="btn success" id="accounts" href="@routes.Accounts.list()">Manage Accounts</a>
-       		<a class="btn success" id="create" href="@routes.Application.create()">Add a new transaction</a>
-    	</div>
-    </div>
+        @**********************************
+        * Helper generating table headers *
+        ***********************************@
+    @header(key: String, title: String) = {
+        <th class="@key.replace(".", "_") header @if(currentSortBy == key) @{
+            if(currentOrder == "asc") "headerSortDown" else "headerSortUp"
+        }">
+            <a href="@link(0, key)">@title</a>
+        </th>
+    }
 
-    
-    @if(currentPage.getTotalRowCount == 0) {
-        
-        <div class="well">
-            <em>Nothing to display</em>
+    @main {
+
+        <h1 id="homeTitle">@Messages("transactions.list.title", currentPage.getTotalRowCount)</h1>
+
+        @if(flash.containsKey("success")) {
+            <div class="alert-message warning">
+                <strong>Done!</strong> @flash.get("success")
+            </div>
+        }
+
+        <div id="actions">
+            <form action="@link(0, "id")" method="GET">
+                <input type="search" id="searchbox" name="f" value="@currentFilter" placeholder="Filter by purpose...">
+                <input type="submit" id="searchsubmit" value="Filter by Reference" class="btn primary">
+            </form>
+            <div id="buttons" >
+                <a class="btn success" id="accounts" href="@routes.Accounts.list()">Manage Accounts</a>
+                <a class="btn success" id="create" href="@routes.Application.create()">Add a new transaction</a>
+            </div>
         </div>
-        
-    } else {
-        
-        <table class="transactions zebra-striped">
-            <thead>
-                <tr>
-                    @header("id", "ID")
-                    @header("accountFrom.iban", "From")
-					@header("accountTo.iban", "To")
-                    @header("reference", "Reference")
-                    @header("date", "Date")
-                    @header("value", "Value")
-                    @header("currency", "Currency")
-                </tr>
-            </thead>
-            <tbody>
+
+
+        @if(currentPage.getTotalRowCount == 0) {
+
+            <div class="well">
+                <em>Nothing to display</em>
+            </div>
+
+        } else {
+
+            <table class="transactions zebra-striped">
+                <thead>
+                    <tr>
+                        @header("id", "ID")
+                        @header("accountFrom.iban", "From")
+                        @header("accountTo.iban", "To")
+                        @header("purpose", "Reference")
+                        @header("date", "Date")
+                        @header("value", "Value")
+                        @header("currency", "Currency")
+                    </tr>
+                </thead>
+                <tbody>
 
                 @for(transaction <- currentPage.getList) {
                     <tr>
                         <td>
-                        	<a href="@routes.Application.edit(transaction.id)">@transaction.id</a>
+                            <a href="@routes.Application.edit(transaction.id)">@transaction.id</a>
                         </td>
                         <td>
-                            @transaction.accountFrom.owner (@transaction.accountFrom.iban) 
+                            @transaction.accountFrom.owner (@transaction.accountFrom.iban)
                         </td>
                         <td>
                             @transaction.accountTo.owner (@transaction.accountTo.iban)
                         </td>
                         <td>
-                            @transaction.reference
+                        @transaction.purpose
                         </td>
                         <td>
-								@transaction.date.format("yyyy-MM-dd")
+                        @transaction.date.format("yyyy-MM-dd")
                         </td>
                         <td>
-                            @transaction.value
+                        @transaction.value
                         </td>
                         <td>
-                            @transaction.currency
+                        @transaction.currency
                         </td>
                     </tr>
                 }
 
-            </tbody>
-        </table>
+                </tbody>
+            </table>
 
-        <div id="pagination" class="pagination">
-            <ul>
-                @if(currentPage.hasPrev) {
-                    <li class="prev">
-                        <a href="@link(currentPage.getPageIndex - 1, null)">&larr; Previous</a>
+            <div id="pagination" class="pagination">
+                <ul>
+                    @if(currentPage.hasPrev) {
+                        <li class="prev">
+                            <a href="@link(currentPage.getPageIndex - 1, null)">&larr; Previous</a>
+                        </li>
+                    } else {
+                        <li class="prev disabled">
+                            <a>&larr; Previous</a>
+                        </li>
+                    }
+                    <li class="current">
+                        <a>Displaying @currentPage.getDisplayXtoYofZ(" to ", " of ")</a>
                     </li>
-                } else {
-                    <li class="prev disabled">
-                        <a>&larr; Previous</a>
-                    </li>
-                }
-                <li class="current">
-                    <a>Displaying @currentPage.getDisplayXtoYofZ(" to "," of ")</a>
-                </li>
-                @if(currentPage.hasNext) {
-                    <li class="next">
-                        <a href="@link(currentPage.getPageIndex + 1, null)">Next &rarr;</a>
-                    </li>
-                } else {
-                    <li class="next disabled">
-                        <a>Next &rarr;</a>
-                    </li>
-                }
-            </ul>
-        </div>
-        
+                    @if(currentPage.hasNext) {
+                        <li class="next">
+                            <a href="@link(currentPage.getPageIndex + 1, null)">Next &rarr;</a>
+                        </li>
+                    } else {
+                        <li class="next disabled">
+                            <a>Next &rarr;</a>
+                        </li>
+                    }
+                </ul>
+            </div>
+
+        }
+
     }
-        
-}
 
             

@@ -5,45 +5,43 @@
 <html>
     <head>
         <title>Banking Application - SOC1</title>
-        <link rel="stylesheet" type="text/css" media="screen" href="@routes.Assets.at("stylesheets/bootstrap.min.css")"> 
-        <link rel="stylesheet" type="text/css" media="screen" href="@routes.Assets.at("stylesheets/main.css")"> 
-       <!--- <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script> -->
-        
-        <!--  
+        <link rel="stylesheet" type="text/css" media="screen" href="@routes.Assets.at("stylesheets/bootstrap.min.css")">
+        <link rel="stylesheet" type="text/css" media="screen" href="@routes.Assets.at("stylesheets/main.css")">
+            <!--- <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script> -->
+
+            <!--
         <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" />
 		<script src="http://code.jquery.com/jquery-1.9.1.js"></script>
 		<script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script> -->
-		
-		<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
-		<script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
-		<link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.3/themes/base/jquery-ui.css" />
-		<script>
-			$(function() {
-				$("#date").datepicker({dateFormat: 'yy-mm-dd' }).val();
-			});
-		</script>
+
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+        <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
+        <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.3/themes/base/jquery-ui.css" />
+        <script>
+        $ ( function ( ) {
+        $ ( "#date" ).datepicker ( { dateFormat : 'yy-mm-dd' } ).val ( ) ;
+        } ) ;
+        </script>
     </head>
     <body>
-        
+
         <header class="topbar">
             <h1 class="fill">
                 <a href="@routes.Application.index()">
-<!--                     Play 2.0 sample application &mdash; Computer database -->
-						BankingApplication &mdash; Service-oriented Computing 1 (SOC1)
+                        <!--                     Play 2.0 sample application  &mdash;  Computer database -->
+                    BankingApplication &mdash; Service-oriented Computing 1 (SOC1)
                 </a>
             </h1>
         </header>
-        
+
         <section id="main">
             @content
-            <footer align="center"> 
-            	Based on the Play Sample Application "Computer Database". <br> 
-            	Created by Bugra Derre and Robin Fischer.
+        <footer align="center">
+            	Based on the Play Sample Application "Computer Database". <br>
+            Created by Bugra Derre and Robin Fischer.
             </footer>
         </section>
-        
-        
-    
+
     </body>
 </html>
 

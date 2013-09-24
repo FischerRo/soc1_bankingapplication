@@ -3,53 +3,53 @@
 # ~~~~
 
 # Home page
-GET     /                           	controllers.Application.index()
+GET         /                                 controllers.Application.index()
 # Map static resources from the /public folder to the /assets URL path
 # Don't touch this. Required to load css etc.
-GET     /assets/*file               controllers.Assets.at(path="/public", file)
+GET         /assets/*file                     controllers.Assets.at(path="/public", file)
 
 
 #####################
 ### Accounts	 ####
 #####################
-GET		/accounts					controllers.Accounts.list(p:Int ?= 0, s ?= "owner", o ?= "asc", f ?= "")
+GET         /accounts                         controllers.Accounts.list(p:Int ?= 0, s ?= "owner", o ?= "asc", f ?= "")
 
 # Add accounts
-GET     /accounts/new              	controllers.Accounts.create()
-POST    /accounts                  	controllers.Accounts.save()
+GET         /accounts/new                     controllers.Accounts.create()
+POST        /accounts                         controllers.Accounts.save()
 
 # Edit accounts
-GET     /accounts/:id              	controllers.Accounts.edit(id:Long)
-POST    /accounts/:id              	controllers.Accounts.update(id:Long)
+GET         /accounts/:id                     controllers.Accounts.edit(id:Long)
+POST        /accounts/:id                     controllers.Accounts.update(id:Long)
 
 # Delete a transaction
-POST    /accounts/:id/delete       	controllers.Accounts.delete(id:Long)
+POST        /accounts/:id/delete              controllers.Accounts.delete(id:Long)
 
 
 
 #####################
 ### Transactions ####
 #####################
-GET		/transactions					controllers.Application.list(p:Int ?= 0, s ?= "date", o ?= "desc", f ?= "")
+GET         /transactions                     controllers.Application.list(p:Int ?= 0, s ?= "date", o ?= "desc", f ?= "")
 
 # Add transactions
-GET     /transactions/new              	controllers.Application.create()
-POST    /transactions                  	controllers.Application.save()
+GET         /transactions/new                 controllers.Application.create()
+POST        /transactions                     controllers.Application.save()
 
 # Edit transactions
-GET     /transactions/:id              controllers.Application.edit(id:Long)
-POST    /transactions/:id              controllers.Application.update(id:Long)
+GET         /transactions/:id                 controllers.Application.edit(id:Long)
+POST        /transactions/:id                 controllers.Application.update(id:Long)
 
 # Delete a transaction
-POST    /transactions/:id/delete       	controllers.Application.delete(id:Long)
+POST        /transactions/:id/delete          controllers.Application.delete(id:Long)
 
 
 
 #####################
 ### API ####
 #####################
-GET     /accounts/:id/transactions				controllers.Application.listTransactionsForAccount(id:String)
-GET     /accounts/:id/debit						controllers.Application.listDebitForAccount(id:String)
-GET     /accounts/:id/credit					controllers.Application.listCreditForAccount(id:String)
+GET         /accounts/:id/transactions        controllers.Application.listTransactionsForAccount(id:String)
+GET         /accounts/:id/debit               controllers.Application.listDebitForAccount(id:String)
+GET         /accounts/:id/credit              controllers.Application.listCreditForAccount(id:String)
 
 
