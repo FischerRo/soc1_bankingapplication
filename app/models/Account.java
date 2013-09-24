@@ -1,5 +1,6 @@
 package models;
 
+import java.math.BigDecimal;
 import java.util.LinkedHashMap;
 import java.util.Locale;
 import java.util.Map;
@@ -24,6 +25,9 @@ public class Account extends Model {
 
     @Constraints.Required
     public String iban;
+
+    @Column(precision = 15, scale = 2)
+    public BigDecimal balance;
 
     @Constraints.Required
     @Enumerated(EnumType.STRING)
