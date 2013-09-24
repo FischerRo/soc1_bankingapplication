@@ -24,10 +24,18 @@ public class Application extends Controller {
     );
 
     /**
-     * This result directly redirect to application home.
+     * This result directly redirect to accounts home.
      */
     public static Result GO_ACCOUNTS = redirect(
             routes.Accounts.list(0, "owner", "asc", "")
+    );
+
+    /**
+     * This result directly redirect to customer home.
+     */
+
+    public static Result GO_CUSTOMERS = redirect(
+            routes.Customers.list(0, "lastName", "asc", "")
     );
 
 

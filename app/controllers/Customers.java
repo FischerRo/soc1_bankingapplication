@@ -3,9 +3,14 @@ package controllers;
 import static play.data.Form.form;
 
 import models.Customer;
+import play.data.Form;
 import play.mvc.Controller;
 import play.mvc.Result;
 import views.html.*;
+import views.html.customerFormCreate;
+import views.html.customerFormEdit;
+
+import javax.persistence.PersistenceException;
 
 /**
  * Created with IntelliJ IDEA.
@@ -30,23 +35,52 @@ public class Customers extends Controller {
 
 
     public static Result create(){
-        return TODO;
+        Form<Customer> customerForm = form(Customer.class);
+        return ok(
+                customerFormCreate.render(customerForm)
+        );
     }
 
     public static Result save(){
-        return TODO;
+
+        Form<Customer> customerForm = form(Customer.class).bindFromRequest();
+        if(customerForm.hasErrors()){
+            return badRequest(customerFormCreate.render(customerForm));
+        }
+        customerForm.get().save();
+        flash("success", "Customer" + customerForm.get().lastName + " has been created");
+        return Application.GO_CUSTOMERS;
+
+
     }
 
     public static Result edit(Long id){
-        return TODO;
+        Form<Customer> customerForm = form(Customer.class).fill(
+                Customer.find.byId(id));
+        return ok(
+                customerFormEdit.render(id, customerForm)
+        );
     }
 
     public static Result update(Long id){
-        return TODO;
+        Form<Customer> customerForm = form(Customer.class).bindFromRequest();
+        if(customerForm.hasErrors()){
+            return badRequest(customerFormEdit.render(id, customerForm));
+        }
+        customerForm.get().update(id);
+        flash("success", "Customer \"" + customerForm.get().lastName + "\" has been changed");
+        return Application.GO_CUSTOMERS;
     }
 
     public static Result delete(Long id){
-        return TODO;
+        try{
+            Customer.find.ref(id).delete();
+            flash("success", "Customer has been deleted");
+        }
+        catch (PersistenceException pe){
+            flash("error", "Customer \"" + Customer.find.ref(id).lastName + "\" cannot be deleted. Found referencing Accounts.");
+        }
+        return Application.GO_CUSTOMERS;
     }
 
 }
