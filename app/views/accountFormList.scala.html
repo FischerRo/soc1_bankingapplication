@@ -78,6 +78,7 @@
                     @header("id", "ID")
                     @header("owner", "Owner")
                     @header("iban", "IBAN")
+                    @header("type", "Type")
                 </tr>
             </thead>
             <tbody>
@@ -88,14 +89,16 @@
                         <a href="@routes.Accounts.edit(account.id)">@account.id</a>
                     </td>
                     <td>
-                    @account.owner
+                        @account.owner
                     </td>
                     <td>
-                    @account.iban
+                        @account.iban
+                    </td>
+                    <td>
+                        @account.typeOf
                     </td>
                 </tr>
             }
-
             </tbody>
         </table>
 

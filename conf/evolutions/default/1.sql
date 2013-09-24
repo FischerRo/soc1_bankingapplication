@@ -7,6 +7,8 @@ create table account (
   id                        bigint not null,
   owner                     varchar(255),
   iban                      varchar(255),
+  type_of                   varchar(8),
+  constraint ck_account_type_of check (type_of in ('Checking','Savings','Loan')),
   constraint pk_account primary key (id))
 ;
 

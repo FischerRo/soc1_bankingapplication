@@ -5,6 +5,8 @@ import java.util.Locale;
 import java.util.Map;
 
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.Id;
 
 import play.data.format.Formatters.SimpleFormatter;
@@ -24,6 +26,14 @@ public class Account extends Model {
 
     @Constraints.Required
     public String iban;
+
+    @Constraints.Required
+    @Enumerated(EnumType.STRING)
+    public Type typeOf;
+
+    public enum Type{
+        Checking, Savings, Loan
+    }
 
 
     /**
@@ -58,7 +68,7 @@ public class Account extends Model {
     public static Map<String, String> options() {
         LinkedHashMap<String, String> options = new LinkedHashMap<String, String>();
         for (Account a : Account.find.orderBy("owner").findList()) {
-            options.put(a.id.toString(), a.owner);
+            options.put(a.id.toString(), a.owner.toString() + " (" + a.typeOf + ")");
         }
         return options;
     }

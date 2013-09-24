@@ -17,6 +17,13 @@
             @inputText(createAccountForm("owner"), '_label -> "Owner")
             @inputText(createAccountForm("iban"), '_label -> "IBAN")
 
+            @select(field = createAccountForm("typeOf"),
+                options(Account.Type.values().toList.map(_.toString)),
+                '_label -> "Type",
+                '_default -> "Choose type",
+                '_showConstraints -> true
+            )
+
 
         </fieldset>
 
