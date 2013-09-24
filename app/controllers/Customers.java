@@ -48,7 +48,7 @@ public class Customers extends Controller {
             return badRequest(customerFormCreate.render(customerForm));
         }
         customerForm.get().save();
-        flash("success", "Customer" + customerForm.get().lastName + " has been created");
+        flash("success", "Customer \"" + customerForm.get().lastName + "\" has been created");
         return Application.GO_CUSTOMERS;
 
 

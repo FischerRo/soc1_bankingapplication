@@ -14,7 +14,13 @@
 
         <fieldset>
 
-            @inputText(editAccountForm("owner"), '_label -> "Owner")
+            @select(
+                editAccountForm("owner"),
+                options(Customer.options),
+                '_label -> "Owner", '_default -> "-- Choose owner --",
+                '_showConstraints -> true
+            )
+
             @inputText(editAccountForm("iban"), '_label -> "IBAN")
 
             @select(field = editAccountForm("typeOf"),

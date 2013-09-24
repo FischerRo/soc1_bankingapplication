@@ -14,8 +14,8 @@
 
         <fieldset>
 
-            @inputText(editCustomerForm("lastName"), '_label -> "Last Name")
-            @inputText(editCustomerForm("firstName"), '_label -> "First Name")
+            @inputText(editCustomerForm("lastName"), '_label -> "Last name")
+            @inputText(editCustomerForm("firstName"), '_label -> "First name")
 
             @select(field = editCustomerForm("sex"),
                 options(Customer.Sex.values().toList.map(_.toString)),
@@ -32,7 +32,7 @@
         </fieldset>
 
         <div class="actions">
-            <input type="submit" value="Save this account" class="btn primary"> or
+            <input type="submit" value="Save this customer" class="btn primary"> or
             <a href="@routes.Customers.list()" class="btn">Cancel</a>
         </div>
 

@@ -4,10 +4,7 @@ import java.util.LinkedHashMap;
 import java.util.Locale;
 import java.util.Map;
 
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 import play.data.format.Formatters.SimpleFormatter;
 import play.data.validation.Constraints;
@@ -21,8 +18,9 @@ public class Account extends Model {
     @Id
     public Long id;
 
+    @ManyToOne
     @Constraints.Required
-    public String owner;
+    public Customer owner;
 
     @Constraints.Required
     public String iban;

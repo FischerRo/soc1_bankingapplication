@@ -1,6 +1,7 @@
 package models;
 
 import com.avaje.ebean.Page;
+import play.data.format.Formatters;
 import play.data.validation.Constraints;
 import play.db.ebean.Model;
 
@@ -8,6 +9,9 @@ import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.Id;
+import java.util.LinkedHashMap;
+import java.util.Locale;
+import java.util.Map;
 
 /**
  * Created with IntelliJ IDEA.
@@ -60,5 +64,46 @@ public class Customer extends Model {
                         .findPagingList(pageSize)
                         .getPage(page);
     }
+
+
+    /**
+     * Used for dropdown when creating Accounts.
+     *
+     * @return
+     */
+    public static Map<String, String> options() {
+        LinkedHashMap<String, String> options = new LinkedHashMap<String, String>();
+        for (Customer c : Customer.find.orderBy("lastName").findList()) {
+            options.put(c.id.toString(), c.lastName.toString() + ", " + c.firstName.toString());
+        }
+        return options;
+    }
+
+
+    @Override
+    public String toString(){
+        return lastName + ", " + firstName;
+    }
+
+
+    static {
+        play.data.format.Formatters.register(Customer.class, new CustomerFormatter());
+    }
+
+    public static class CustomerFormatter extends Formatters.SimpleFormatter<Customer> {
+
+        @Override
+        public Customer parse(String text, Locale locale) {
+            if (text == null || text.trim().length() == 0)
+                return null;
+            return Customer.find.byId(Long.parseLong(text.trim()));
+        }
+
+        @Override
+        public String print(Customer value, Locale locale) {
+            return (value == null || value.id == null ? "" : value.id.toString());
+        }
+    }
+
 
 }
