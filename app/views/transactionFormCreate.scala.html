@@ -38,14 +38,23 @@
                     '_showConstraints -> true
                 )
 
-                @inputText(transactionForm("purpose"), '_label -> "Reference")
+                @inputText(transactionForm("purpose"), '_label -> "Purpose")
+
+                @inputText(transactionForm("category"), '_label -> "Category")
+
+                @select(field = transactionForm("status"),
+                    options(Transaction.Status.values().toList.map(_.toString)),
+                    '_label -> "Status",
+                    '_default -> "Choose status",
+                    '_showConstraints -> true
+                )
 
 
             </fieldset>
 
             <div class="actions">
                 <input type="submit" value="Create this transaction" class="btn primary"> or
-                <a href="@routes.Application.list()" class="btn">Cancel</a>
+                <a href="@routes.Application.index()" class="btn">Cancel</a>
             </div>
 
         }

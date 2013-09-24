@@ -25,9 +25,9 @@
 
     }
 
-        @**********************************
-        * Helper generating table headers *
-        ***********************************@
+    @**********************************
+    * Helper generating table headers *
+    ***********************************@
     @header(key: String, title: String) = {
         <th class="@key.replace(".", "_") header @if(currentSortBy == key) @{
             if(currentOrder == "asc") "headerSortDown" else "headerSortUp"
@@ -49,7 +49,7 @@
         <div id="actions">
             <form action="@link(0, "id")" method="GET">
                 <input type="search" id="searchbox" name="f" value="@currentFilter" placeholder="Filter by purpose...">
-                <input type="submit" id="searchsubmit" value="Filter by Reference" class="btn primary">
+                <input type="submit" id="searchsubmit" value="Filter by Purpose" class="btn primary">
             </form>
             <div id="buttons" >
                 <a class="btn success" id="accounts" href="@routes.Accounts.list()">Manage Accounts</a>
@@ -72,10 +72,12 @@
                         @header("id", "ID")
                         @header("accountFrom.iban", "From")
                         @header("accountTo.iban", "To")
-                        @header("purpose", "Reference")
                         @header("date", "Date")
                         @header("value", "Value")
                         @header("currency", "Currency")
+                        @header("purpose", "Purpose")
+                        @header("status", "Status")
+                        @header("category", "Category")
                     </tr>
                 </thead>
                 <tbody>
@@ -92,16 +94,22 @@
                             @transaction.accountTo.owner (@transaction.accountTo.iban)
                         </td>
                         <td>
-                        @transaction.purpose
+                            @transaction.date.format("yyyy-MM-dd")
                         </td>
                         <td>
-                        @transaction.date.format("yyyy-MM-dd")
+                            @transaction.value
                         </td>
                         <td>
-                        @transaction.value
+                            @transaction.currency
                         </td>
                         <td>
-                        @transaction.currency
+                            @transaction.purpose
+                        </td>
+                        <td>
+                            @transaction.category
+                        </td>
+                        <td>
+                            @transaction.status
                         </td>
                     </tr>
                 }

@@ -18,7 +18,10 @@ create table transaction (
   date                      timestamp,
   value                     decimal(15,2),
   currency                  varchar(3),
+  category                  varchar(255),
+  status                    varchar(9),
   constraint ck_transaction_currency check (currency in ('USD','EUR','GBP')),
+  constraint ck_transaction_status check (status in ('Processed','Pending','Error')),
   constraint pk_transaction primary key (id))
 ;
 

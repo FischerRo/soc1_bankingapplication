@@ -57,10 +57,25 @@ public class Transaction extends Model {
     @Enumerated(EnumType.STRING)
     public Currency currency;
 
+    @MaxLength(40)
+    public String category;
+
+    @Required
+    @Enumerated(EnumType.STRING)
+    public Status status;
+
+    /**
+     * ENUMERATIONS
+     */
 
     public enum Currency {
         USD, EUR, GBP
     }
+
+    public enum Status{
+        Processed, Pending, Error
+    }
+
 
     /**
      * Generic query helper for entity Transaction with id Long
