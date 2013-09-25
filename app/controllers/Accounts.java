@@ -10,6 +10,8 @@ import play.mvc.Controller;
 import play.mvc.Result;
 import views.html.*;
 
+import java.math.BigDecimal;
+
 public class Accounts extends Controller {
 	
 	/**
@@ -51,7 +53,10 @@ public class Accounts extends Controller {
 		if(accountForm.hasErrors()){
 			return badRequest(accountFormCreate.render(accountForm));
 		}
-		accountForm.get().save();
+//        if (accountForm.get().balance == null)
+//            accountForm.get().balance = new BigDecimal(0.00);
+
+        accountForm.get().save();
 		flash("success", "Account " + accountForm.get().owner + " has been created");
 		return Application.GO_ACCOUNTS;
 	}
@@ -80,7 +85,9 @@ public class Accounts extends Controller {
 		if(accountForm.hasErrors()){
 			return badRequest(accountFormEdit.render(id, accountForm));
 		}
-		accountForm.get().update(id);
+//        if (accountForm.get().balance == null)
+//            accountForm.get().balance = new BigDecimal(0.00);
+        accountForm.get().update(id);
 		flash("success", "Account " + accountForm.get().owner + " has been changed");
 		return Application.GO_ACCOUNTS;
 	}
@@ -101,6 +108,5 @@ public class Accounts extends Controller {
 		}
 		return Application.GO_ACCOUNTS;
 	}
-
 
 }
