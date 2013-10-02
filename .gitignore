@@ -18,3 +18,4 @@ dist
 /RUNNING_PID
 /.settings
 bankdb.h2.db
+bankdb.trace.db
