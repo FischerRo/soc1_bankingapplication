@@ -8,8 +8,8 @@ create table account (
   owner_id                  bigint,
   iban                      varchar(255),
   balance                   decimal(15,2),
-  type_of                   varchar(8),
-  constraint ck_account_type_of check (type_of in ('Checking','Savings','Loan')),
+  type_of                   varchar(11),
+  constraint ck_account_type_of check (type_of in ('external','depot','savings','credit_card','checking')),
   constraint pk_account primary key (id))
 ;
 
@@ -17,11 +17,11 @@ create table customer (
   id                        bigint not null,
   last_name                 varchar(255),
   first_name                varchar(255),
-  sex                       varchar(6),
+  sex                       varchar(1),
   city                      varchar(255),
   age                       integer,
   age_group                 varchar(255),
-  constraint ck_customer_sex check (sex in ('male','female')),
+  constraint ck_customer_sex check (sex in ('m','w')),
   constraint pk_customer primary key (id))
 ;
 
@@ -35,8 +35,8 @@ create table transaction (
   currency                  varchar(3),
   category                  varchar(255),
   status                    varchar(9),
-  constraint ck_transaction_currency check (currency in ('USD','EUR','GBP')),
-  constraint ck_transaction_status check (status in ('Processed','Pending','Error')),
+  constraint ck_transaction_currency check (currency in ('CHF','EUR','USD')),
+  constraint ck_transaction_status check (status in ('Processed','Pending','Error','Rejected')),
   constraint pk_transaction primary key (id))
 ;
 

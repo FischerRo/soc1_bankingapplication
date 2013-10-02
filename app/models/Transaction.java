@@ -69,11 +69,11 @@ public class Transaction extends Model {
      */
 
     public enum Currency {
-        USD, EUR, GBP
+        CHF, EUR, USD
     }
 
     public enum Status{
-        Processed, Pending, Error
+        Processed, Pending, Error, Rejected
     }
 
 

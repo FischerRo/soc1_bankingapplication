@@ -34,7 +34,7 @@ public class Account extends Model {
     public Type typeOf;
 
     public enum Type{
-        Checking, Savings, Loan
+        external, depot, savings, credit_card, checking
     }
 
 

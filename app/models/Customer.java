@@ -46,7 +46,7 @@ public class Customer extends Model {
     public String ageGroup;
 
     public enum Sex{
-        male, female
+        m, w
     }
 
 
