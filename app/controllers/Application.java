@@ -91,13 +91,13 @@ public class Application extends Controller {
 
     public static Result listCreditForAccount(String filter) {
         //TODO: Allow for more than 10 objects -> hasNext()?
-        List<Transaction> transactionList = Transaction.pageByCustomColumn(0, 1000, "date", "desc", "accountTo", filter).getList();
+        List<Transaction> transactionList = Transaction.pageByCustomColumn(0, 1000, "date", "desc", "accountFrom", filter).getList();
         return ok(Json.toJson(transactionList));
     }
 
     public static Result listDebitForAccount(String filter) {
         //TODO: Allow for more than 10 objects -> hasNext()?
-        List<Transaction> transactionList = Transaction.pageByCustomColumn(0, 1000, "date", "desc", "accountFrom", filter).getList();
+        List<Transaction> transactionList = Transaction.pageByCustomColumn(0, 1000, "date", "desc", "accountTo", filter).getList();
         return ok(Json.toJson(transactionList));
     }
 

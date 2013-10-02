@@ -96,8 +96,8 @@ public class Transaction extends Model {
                 find.where()
                         .ilike("purpose", "%" + filter + "%")
                         .orderBy(sortBy + " " + order)
-                        .fetch("accountTo")    //TODO: is this gonna work? -> just copied..
                         .findPagingList(pageSize)
+                        .setFetchAhead(false)
                         .getPage(page);
     }
 
@@ -115,8 +115,9 @@ public class Transaction extends Model {
                 find.where()
                         .ilike(filterBy, "%" + filter + "%")
                         .orderBy(sortBy + " " + order)
-                        .fetch("accountTo")    //TODO: is this gonna work? -> just copied..
+                        //.fetch("accountTo")    //TODO: is this gonna work? -> just copied..
                         .findPagingList(pageSize)
+                        .setFetchAhead(false)
                         .getPage(page);
     }
 

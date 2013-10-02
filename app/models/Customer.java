@@ -1,5 +1,6 @@
 package models;
 
+import com.avaje.ebean.Expr;
 import com.avaje.ebean.Page;
 import play.data.format.Formatters;
 import play.data.validation.Constraints;
@@ -59,9 +60,14 @@ public class Customer extends Model {
     public static Page<Customer> page(int page, int pageSize, String sortBy, String order, String filter) {
         return
                 find.where()
-                        .ilike("lastName", "%" + filter + "%")
+                        .or(
+                                Expr.ilike("lastName", "%" + filter + "%"),
+                                Expr.ilike("firstName", "%" + filter + "%")
+
+                        )
                         .orderBy(sortBy + " " + order)
                         .findPagingList(pageSize)
+                        .setFetchAhead(false)
                         .getPage(page);
     }
 

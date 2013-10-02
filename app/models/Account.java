@@ -7,11 +7,12 @@ import java.util.Map;
 
 import javax.persistence.*;
 
+import com.avaje.ebean.*;
+import com.avaje.ebean.Query;
+import org.h2.expression.ExpressionList;
 import play.data.format.Formatters.SimpleFormatter;
 import play.data.validation.Constraints;
 import play.db.ebean.Model;
-
-import com.avaje.ebean.Page;
 
 @Entity
 public class Account extends Model {
@@ -53,12 +54,21 @@ public class Account extends Model {
      * @param filter   Filter applied on the name column
      */
     public static Page<Account> page(int page, int pageSize, String sortBy, String order, String filter) {
+
         return
                 find.where()
-                        .ilike("owner", "%" + filter + "%")
+                        .or(
+                                Expr.ilike("owner.lastName", "%" + filter + "%"),
+                                Expr.ilike("owner.firstName","%" + filter + "%")
+                        )
                         .orderBy(sortBy + " " + order)
+                        .fetch("owner")
                         .findPagingList(pageSize)
+                        .setFetchAhead(false)
                         .getPage(page);
+
+
+
     }
 
 
