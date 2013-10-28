@@ -6,9 +6,9 @@ import models.Customer;
 import play.data.Form;
 import play.mvc.Controller;
 import play.mvc.Result;
-import views.html.*;
 import views.html.customerFormCreate;
 import views.html.customerFormEdit;
+import views.html.customerFormList;
 
 import javax.persistence.PersistenceException;
 

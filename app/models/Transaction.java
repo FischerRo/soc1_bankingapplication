@@ -10,6 +10,7 @@ import javax.persistence.Enumerated;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
+import com.avaje.ebean.Expr;
 import play.data.format.Formats;
 import play.data.validation.Constraints;
 import play.data.validation.Constraints.MaxLength;
@@ -116,6 +117,32 @@ public class Transaction extends Model {
                         .ilike(filterBy, "%" + filter + "%")
                         .orderBy(sortBy + " " + order)
                         //.fetch("accountTo")    //TODO: is this gonna work? -> just copied..
+                        .findPagingList(pageSize)
+                        .setFetchAhead(false)
+                        .getPage(page);
+    }
+
+
+    public static Page<Transaction> pageByAccountId(int page, int pageSize, String sortBy, String order, String transactionAccount, String accountID) {
+        // return all transactions if no accountType is given
+        if (transactionAccount == null || transactionAccount.isEmpty()){
+            return
+
+                    find.where()
+                            .or(
+                                    Expr.ieq("accountFrom", accountID),
+                                    Expr.ieq("accountTo", accountID)
+                            )
+                            .orderBy(sortBy + " " + order)
+                            .findPagingList(pageSize)
+                            .setFetchAhead(false)
+                            .getPage(page);
+        }
+
+        return
+                find.where()
+                        .ieq(transactionAccount, accountID)
+                        .orderBy(sortBy + " " + order)
                         .findPagingList(pageSize)
                         .setFetchAhead(false)
                         .getPage(page);
