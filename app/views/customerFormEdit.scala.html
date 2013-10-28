@@ -32,13 +32,13 @@
         </fieldset>
 
         <div class="actions">
-            <input type="submit" value="Save this customer" class="btn primary"> or
+            @*<input type="submit" value="Save this customer" class="btn primary"> or*@
             <a href="@routes.Customers.list()" class="btn">Cancel</a>
         </div>
 
     }
 
-    @form(routes.Customers.delete(id), 'class -> "topRight") {
+@*    @form(routes.Customers.delete(id), 'class -> "topRight") {
         <input type="submit" value="Delete this customer" class="btn danger">
-    }
+    }*@
 }
