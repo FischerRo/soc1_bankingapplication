@@ -34,13 +34,13 @@
         </fieldset>
 
         <div class="actions">
-            <input type="submit" value="Save this account" class="btn primary"> or
+            @*<input type="submit" value="Save this account" class="btn primary"> or*@
             <a href="@routes.Accounts.list()" class="btn">Cancel</a>
         </div>
 
     }
 
-    @form(routes.Accounts.delete(id), 'class -> "topRight") {
+@*    @form(routes.Accounts.delete(id), 'class -> "topRight") {
         <input type="submit" value="Delete this account" class="btn danger">
-    }
+    }*@
 }
