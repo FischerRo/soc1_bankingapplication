@@ -9,8 +9,8 @@
 GET         /accounts/:id/transactions        controllers.Application.listTransactionsForAccount(id:String)
 GET         /accounts/:id/debit               controllers.Application.listDebitForAccount(id:String)
 GET         /accounts/:id/credit              controllers.Application.listCreditForAccount(id:String)
-GET         /transactions/add                 controllers.Transactions.add(fromId:Long, toId:Long, currency:String ?="EUR", category:String ?="Not specified", status:String ?="Processed", purpose:String ?="Not specified", value:String ?="0")
-#should later be post
+POST        /transactions/add                 controllers.Transactions.add(fromId:Long, toId:Long, currency:String ?="EUR", category:String ?="Not specified", status:String ?="Processed", purpose:String ?="Not specified", value:String ?="0")
+
 
 # Home page
 GET         /                                 controllers.Application.index()
