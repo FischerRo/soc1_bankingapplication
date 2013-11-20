@@ -32,6 +32,6 @@ public class Transactions {
         inst.value = BigDecimal.valueOf(Double.valueOf(value));
 
         inst.save();
-        return ok(Json.toJson("Successfully created Transaction"));
+        return ok(Json.toJson(inst));
     }
 }
