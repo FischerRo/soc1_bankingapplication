@@ -57,10 +57,11 @@ public class Account extends Model {
 
         return
                 find.where()
-                        .or(
-                                Expr.ilike("owner.lastName", "%" + filter + "%"),
-                                Expr.ilike("owner.firstName","%" + filter + "%")
-                        )
+//                        .or(
+//                                Expr.ilike("owner.lastName", "%" + filter + "%"),
+//                                Expr.ilike("owner.firstName","%" + filter + "%")
+//                        )
+                        .like("iban", "%" + filter + "%")
                         .orderBy(sortBy + " " + order)
                         .fetch("owner")
                         .findPagingList(pageSize)
