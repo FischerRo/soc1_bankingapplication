@@ -6,11 +6,11 @@
 #####################
 ### API ####
 #####################
-GET         /accounts/:id/transactions        controllers.Application.listTransactionsForAccount(id:String)
-GET         /accounts/:id/debit               controllers.Application.listDebitForAccount(id:String)
-GET         /accounts/:id/credit              controllers.Application.listCreditForAccount(id:String)
-POST        /transactions/add                 controllers.Transactions.add(fromId:Long, toId:Long, currency:String ?="EUR", category:String ?="Not specified", status:String ?="Processed", purpose:String ?="Not specified", value:String ?="0")
-POST        /transactions/addWithDate         controllers.Transactions.addWithDate(fromId:Long, toId:Long, currency:String ?="EUR", category:String ?="Not specified", status:String ?="Processed", purpose:String ?="Not specified", value:String ?="0", date:String ?="0")
+GET         /account/:id/transactions        controllers.Application.listTransactionsForAccount(id:String)
+GET         /account/:id/debit               controllers.Application.listDebitForAccount(id:String)
+GET         /account/:id/credit              controllers.Application.listCreditForAccount(id:String)
+POST        /transactions                 	  controllers.Transactions.add(fromId:Long, toId:Long, currency:String ?="EUR", category:String ?="Not specified", status:String ?="Processed", purpose:String ?="Not specified", value:String ?="0")
+POST        /transactions     			      controllers.Transactions.addWithDate(fromId:Long, toId:Long, currency:String ?="EUR", category:String ?="Not specified", status:String ?="Processed", purpose:String ?="Not specified", value:String ?="0", date:String ?="0")
 
 
 # Home page
@@ -23,28 +23,28 @@ GET         /assets/*file                     controllers.Assets.at(path="/publi
 #####################
 ### Accounts	 ####
 #####################
-GET         /accounts                         controllers.Accounts.list(p:Int ?= 0, s ?= "owner", o ?= "asc", f ?= "")
+GET         /accounts/list                         controllers.Accounts.list(p:Int ?= 0, s ?= "owner", o ?= "asc", f ?= "")
 
 # Add accounts
-GET         /accounts/new                     controllers.Accounts.create()
-POST        /accounts                         controllers.Accounts.save()
+GET         /accounts                     	  controllers.Accounts.create()
+POST        /accounts                          controllers.Accounts.save()
 
 # Edit accounts
-GET         /accounts/:id                     controllers.Accounts.edit(id:Long)
-POST        /accounts/:id                     controllers.Accounts.update(id:Long)
+GET         /accounts/:id                      controllers.Accounts.edit(id:Long)
+POST        /accounts/:id                      controllers.Accounts.update(id:Long)
 
 # Delete a transaction
-POST        /accounts/:id/delete              controllers.Accounts.delete(id:Long)
+POST        /accounts/:id/delete           		  controllers.Accounts.delete(id:Long)
 
 
 #####################
 ### Customers    ####
 #####################
-GET         /customers                        controllers.Customers.list(p:Int ?=0, s ?= "lastName", o ?= "asc", f ?= "")
+GET         /customers/list                     controllers.Customers.list(p:Int ?=0, s ?= "lastName", o ?= "asc", f ?= "")
 
 # Add accounts
-GET         /customers/new                    controllers.Customers.create()
-POST        /customers                        controllers.Customers.save()
+GET         /customers                    		controllers.Customers.create()
+POST        /customers                        	controllers.Customers.save()
 
 # Edit accounts
 GET         /customers/:id                    controllers.Customers.edit(id:Long)
@@ -57,10 +57,10 @@ POST        /customers/:id/delete             controllers.Customers.delete(id:Lo
 #####################
 ### Transactions ####
 #####################
-GET         /transactions                     controllers.Application.list(p:Int ?= 0, s ?= "date", o ?= "desc", f ?= "")
+GET         /transactions/list                     controllers.Application.list(p:Int ?= 0, s ?= "date", o ?= "desc", f ?= "")
 
 # Add transactions
-GET         /transactions/new                 controllers.Application.create()
+GET         /transactions                 controllers.Application.create()
 POST        /transactions                     controllers.Application.save()
 
 # Edit transactions

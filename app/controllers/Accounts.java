@@ -35,7 +35,7 @@ public class Accounts extends Controller {
 	}
 
 	/**
-	 * GET     /accounts/new              	controllers.Accounts.create()
+	 * GET     /account              	controllers.Accounts.create()
 	 * Display the AccountCreationForm
 	 * @return
 	 */
@@ -47,7 +47,7 @@ public class Accounts extends Controller {
 	}
 	
 	/**
-	 * POST    /accounts                  	controllers.Accounts.save()
+	 * POST    /account                  	controllers.Accounts.save()
 	 * @return
 	 */
 	public static Result save(){
@@ -63,9 +63,9 @@ public class Accounts extends Controller {
 		return Application.GO_ACCOUNTS;
 	}
 
-//	# Edit accounts
+//	# Edit account
 	/**
-	 * GET     /accounts/:id              	controllers.Accounts.edit(id:Long)
+	 * GET     /account/:id              	controllers.Accounts.edit(id:Long)
 	 * @param id
 	 * @return
 	 */
@@ -78,7 +78,7 @@ public class Accounts extends Controller {
 	}
 	
 	/**
-	 * POST    /accounts/:id              	controllers.Accounts.update(id:Long)
+	 * POST    /account/:id              	controllers.Accounts.update(id:Long)
 	 * @param id
 	 * @return
 	 */
@@ -95,19 +95,22 @@ public class Accounts extends Controller {
 	}
 
 	/**
-	 * POST    /accounts/:id/delete       	controllers.Accounts.delete(id:Long)
+	 * DELETE    /account/:id       	controllers.Accounts.delete(id:Long)
 	 * @param id
 	 * @return
 	 */
 	public static Result delete(Long id){
 
+		System.out.println("blabla");
+
 		try{
-			Account.find.ref(id).delete();
+			Account.find.byId(id).delete();
 			flash("success", "Account has been deleted");
 		} 
 		catch (PersistenceException pe){
 			flash("error", "Account " + Account.find.ref(id).owner + " cannot be deleted. Found referencing transactions.");
 		}
+
 		return Application.GO_ACCOUNTS;
 	}
 
